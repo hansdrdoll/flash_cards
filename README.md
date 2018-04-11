@@ -78,14 +78,16 @@ As someone who is finished reviewing cards, I want to be redirected to the home 
 
 * **Create**, **Read**, **Update**, and **Delete** individual flashcards and decks
 * **Quiz** yourself
-* Share your decks publicly, so other users can study the same topic
+* **Share** your decks publicly, so other users can study the same topic
 * **Navigate** and **Edit** seamlessly from the **Dashboard** to your decks and/or individual flashcards
 * **Track** which cards you need to **Review**
 
 ## Dependancies:
 
 * PostgreSQL
+
 * Express
+
 * React
 
 ## Wireframes:
@@ -108,12 +110,13 @@ As someone who is finished reviewing cards, I want to be redirected to the home 
 The Database for the MVP consist of 4 tables
 
 * a **Users** table for user information
+
   * User ID - Primary Key(Bigserial)
   * Username (varchar)
   * Hashed Password (varchar)
   * Deck ID - Foreign Key Referencing decks.id (Bigserial)
 
-- a **Decks** table for deck information
+* a **Decks** table for deck information
 
   * Deck ID - Primary Key(Bigserial)
   * Title (varchar)
