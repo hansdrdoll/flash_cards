@@ -86,9 +86,58 @@ As someone who is finished reviewing cards, I want to be redirected to the home 
 
 * PostgreSQL
 
-* Express
+  * To install PostgreSQL, run:
 
-* React
+    ```
+    brew install postgres
+    ```
+
+- Express
+
+  * To install Express, run:
+
+    ```
+    brew install node
+    ```
+
+  from the root directory of your project, this gives you access to node and and the node package manager (npm)
+
+  * Then run:
+
+    ```
+    npm install --save express
+    ```
+
+    this will install the node package manager and Express to the node_modules folder
+
+- React
+
+  * To create the react app, run:
+
+    ```
+    npm install -g create-react-app
+    ```
+
+    this will download all the necessary dependancies to run a react app
+
+  * Then, run:
+
+    ```
+    create-react-app [APP-NAME-HERE]
+    ```
+
+    this will create the initial directory structure for the application
+
+  * From here, you will need to change directory into the applications directory, using:
+
+    ```
+    cd my-app
+    ```
+
+  * Then start the server by running:
+    ```
+    npm start
+    ```
 
 ## Wireframes:
 
