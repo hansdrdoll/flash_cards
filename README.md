@@ -92,7 +92,7 @@ As someone who is finished reviewing cards, I want to be redirected to the home 
     brew install postgres
     ```
 
-- Express
+* Express
 
   * To install Express, run:
 
@@ -110,7 +110,7 @@ As someone who is finished reviewing cards, I want to be redirected to the home 
 
     this will install the node package manager and Express to the node_modules folder
 
-- React
+* React
 
   * To create the react app, run:
 
@@ -137,6 +137,20 @@ As someone who is finished reviewing cards, I want to be redirected to the home 
   * Then start the server by running:
     ```
     npm start
+    ```
+
+* JWT
+
+  * To install the JWT package, run:
+
+    ```
+    npm install --save jwt
+    ```
+
+    then import it into your app.js file
+
+    ```
+    import jwt from "node.jwt"
     ```
 
 ## Wireframes:
