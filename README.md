@@ -76,9 +76,13 @@ As someone who is finished reviewing cards, I want to be redirected to the home 
 
 ## Features:
 
-*   Create, Read, Update, and Delete individual flashcards and decks
-*   Quiz yourself
-*   Share your decks publicly, so other users can study the same topic
+
+* **Create**, **Read**, **Update**, and **Delete** individual flashcards and decks
+* **Quiz** yourself
+* Share your decks publicly, so other users can study the same topic
+* **Navigate** and **Edit** seamlessly from the **Dashboard** to your decks and/or individual flashcards
+* **Track** which cards you need to **Review**
+
 
 ## Dependancies:
 
@@ -103,26 +107,37 @@ As someone who is finished reviewing cards, I want to be redirected to the home 
 
 ## Database
 
-The Database for the MVP consist of 3 tables
+The Database for the MVP consist of 4 tables
 
-*   a Users table for user information
+
+ryan* a **Users** table for user information
+
 
     *   User ID - Primary Key(Bigserial)
     *   Username (varchar)
     *   Hashed Password (varchar)
     *   Deck ID - Foreign Key Referencing decks.id (Bigserial)
 
-*   a Decks table for deck information
+
+* a **Decks** table for deck information
+
 
     *   Deck ID - Primary Key(Bigserial)
     *   Title (varchar)
     *   User ID - Foreign Key Referencing users.id (Bigserial)
 
-*   a Cards table for card information
+
+* a **Cards** table for card information
+
 
     *   Card ID - Primary Key(Bigserial)
     *   Question (varchar)
     *   Answer (varchar)
     *   Deck ID - Foreign Key Referencing decks.id (Bigserial)
+
+* a **Progression** table that stores the cards that a user wants to review
+
+  * Card ID - Foreign Key Referencing cards.id (Bigserial)
+  * User ID - Foreign Key Referencing users.id (Bigserial)
 
 ![Alt text](./assets/Project3DB.png)
