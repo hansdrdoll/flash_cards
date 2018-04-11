@@ -100,7 +100,7 @@ As someone who is finished reviewing cards, I want to be redirected to the home 
     brew install node
     ```
 
-  from the root directory of your project, this gives you access to node and and the node package manager (npm)
+    from the root directory of your project, this gives you access to node and and the node package manager (npm)
 
   * Then run:
 
