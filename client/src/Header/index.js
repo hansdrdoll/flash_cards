@@ -8,11 +8,13 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        <h1>Header</h1>
+        <h2 className="nav-item dashboard">Dashboard</h2>
+        <h2 className="nav-item create">Create Deck</h2>
+        <h2 className="nav-item your-decks">Your Decks</h2>
+        <h2 className="nav-item review">Review</h2>
       </div>
     )
   }
-
 }
 
 export default Header;
