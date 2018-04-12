@@ -8,7 +8,7 @@ Cards.findAll = deck_id => {
 
 Cards.create = newCard => {
   return db.one(
-    "INSERT INTO cards (question, answer, deck_id) VALUES ($1, $2, $3)",
+    "INSERT INTO cards (question, answer, deck_id) VALUES ($1, $2, $3) RETURNING id",
     [newCard.question, newCard.answer, newCard.deck_id]
   );
 };
