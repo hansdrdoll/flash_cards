@@ -1,12 +1,7 @@
+DROP DATABASE flash_cards;
 CREATE DATABASE flash_cards;
 
 \c flash_cards;
-
-DROP TABLE users;
-DROP TABLE decks;
-DROP TABLE cards;
-DROP TABLE progression;
-
 
 CREATE TABLE users(
   id BIGSERIAL PRIMARY KEY,
