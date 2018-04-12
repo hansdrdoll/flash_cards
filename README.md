@@ -1,4 +1,4 @@
-# Flash Cards
+# Flash Cards ok
 
 A Node/React app to create and study flashcards by @Alexander, @BDMartinez, @hans
 
@@ -76,125 +76,125 @@ As someone who is finished reviewing cards, I want to be redirected to the home 
 
 ## Features:
 
-* **Create**, **Read**, **Update**, and **Delete** individual flashcards and decks
-* **Quiz** yourself
-* **Share** your decks publicly, so other users can study the same topic
-* **Navigate** and **Edit** seamlessly from the **Dashboard** to your decks and/or individual flashcards
-* **Track** which cards you need to **Review**
+*   **Create**, **Read**, **Update**, and **Delete** individual flashcards and decks
+*   **Quiz** yourself
+*   **Share** your decks publicly, so other users can study the same topic
+*   **Navigate** and **Edit** seamlessly from the **Dashboard** to your decks and/or individual flashcards
+*   **Track** which cards you need to **Review**
 
 ## Dependancies:
 
-* PostgreSQL
+*   PostgreSQL
 
-  * To install PostgreSQL, run:
+    *   To install PostgreSQL, run:
 
-    ```
-    brew install postgres
-    ```
+        ```
+        brew install postgres
+        ```
 
-* Express
+*   Express
 
-  * To install Express, run:
+    *   To install Express, run:
 
-    ```
-    brew install node
-    ```
+        ```
+        brew install node
+        ```
 
-    from the root directory of your project, this gives you access to node and and the node package manager (npm)
+        from the root directory of your project, this gives you access to node and and the node package manager (npm)
 
-  * Then run:
+    *   Then run:
 
-    ```
-    npm install --save express
-    ```
+        ```
+        npm install --save express
+        ```
 
-    this will install the node package manager and Express to the node_modules folder
+        this will install the node package manager and Express to the node_modules folder
 
-* React
+*   React
 
-  * To create the react app, run:
+    *   To create the react app, run:
 
-    ```
-    npm install -g create-react-app
-    ```
+        ```
+        npm install -g create-react-app
+        ```
 
-    this will download all the necessary dependancies to run a react app
+        this will download all the necessary dependancies to run a react app
 
-  * Then, run:
+    *   Then, run:
 
-    ```
-    create-react-app [APP-NAME-HERE]
-    ```
+        ```
+        create-react-app [APP-NAME-HERE]
+        ```
 
-    this will create the initial directory structure for the application
+        this will create the initial directory structure for the application
 
-  * From here, you will need to change directory into the applications directory, using:
+    *   From here, you will need to change directory into the applications directory, using:
 
-    ```
-    cd my-app
-    ```
+        ```
+        cd my-app
+        ```
 
-  * Then start the server by running:
-    ```
-    npm start
-    ```
+    *   Then start the server by running:
+        ```
+        npm start
+        ```
 
-* JWT
+*   JWT
 
-  * To install the JWT package, run:
+    *   To install the JWT package, run:
 
-    ```
-    npm install --save jwt
-    ```
+        ```
+        npm install --save jwt
+        ```
 
-    then import it into your app.js file
+        then import it into your app.js file
 
-    ```
-    import jwt from "node.jwt"
-    ```
+        ```
+        import jwt from "node.jwt"
+        ```
 
 ## Wireframes:
 
 ## MVP:
 
-* CRUD users
-* each user can CRUD their decks
-* each deck can contain any number of flashcards
-* each deck can marked public or private
-* all users can read all public decks
+*   CRUD users
+*   each user can CRUD their decks
+*   each deck can contain any number of flashcards
+*   each deck can marked public or private
+*   all users can read all public decks
 
 ## Post MVP:
 
-* Link documentation to flashcards
-* Gameify flashcards to be multiple choice
+*   Link documentation to flashcards
+*   Gameify flashcards to be multiple choice
 
 ## Database
 
 The Database for the MVP consist of 4 tables
 
-* a **Users** table for user information
+*   a **Users** table for user information
 
-  * User ID - Primary Key(Bigserial)
-  * Username (varchar)
-  * Hashed Password (varchar)
-  * Deck ID - Foreign Key Referencing decks.id (Bigserial)
+    *   User ID - Primary Key(Bigserial)
+    *   Username (varchar)
+    *   Hashed Password (varchar)
+    *   Deck ID - Foreign Key Referencing decks.id (Bigserial)
 
-* a **Decks** table for deck information
+*   a **Decks** table for deck information
 
-  * Deck ID - Primary Key(Bigserial)
-  * Title (varchar)
-  * User ID - Foreign Key Referencing users.id (Bigserial)
+    *   Deck ID - Primary Key(Bigserial)
+    *   Title (varchar)
+    *   User ID - Foreign Key Referencing users.id (Bigserial)
 
-* a **Cards** table for card information
+*   a **Cards** table for card information
 
-  * Card ID - Primary Key(Bigserial)
-  * Question (varchar)
-  * Answer (varchar)
-  * Deck ID - Foreign Key Referencing decks.id (Bigserial)
+    *   Card ID - Primary Key(Bigserial)
+    *   Question (varchar)
+    *   Answer (varchar)
+    *   Deck ID - Foreign Key Referencing decks.id (Bigserial)
 
-- a **Progression** table that stores the cards that a user wants to review
+-   a **Progression** table that stores the cards that a user wants to review
 
-  * Card ID - Foreign Key Referencing cards.id (Bigserial)
-  * User ID - Foreign Key Referencing users.id (Bigserial)
+    *   Card ID - Foreign Key Referencing cards.id (Bigserial)
+    *   User ID - Foreign Key Referencing users.id (Bigserial)
 
 ![Alt text](./assets/Project3DB.png)
