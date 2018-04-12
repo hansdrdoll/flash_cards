@@ -7,6 +7,7 @@ DROP TABLE decks;
 DROP TABLE cards;
 DROP TABLE progression;
 
+
 CREATE TABLE users(
   id BIGSERIAL PRIMARY KEY,
   username VARCHAR(255),
@@ -18,7 +19,8 @@ CREATE TABLE decks(
   id BIGSERIAL PRIMARY KEY,
   title VARCHAR(255),
   slug VARCHAR(255),
-  user_id FOREIGN KEY REFERENCES users(id)
+  user_id FOREIGN KEY REFERENCES users(id),
+  public BOOLEAN DEFAULT false
 );
 
 CREATE TABLE cards(
@@ -30,5 +32,6 @@ CREATE TABLE cards(
 
 CREATE TABLE progression(
   card_id FOREIGN KEY REFERENCES cards(id),
-  user_id FOREIGN KEY REFERENCES users(id)
+  user_id FOREIGN KEY REFERENCES users(id),
+  deck_id FOREIGN KEY REFERENCES decks(id)
 );
