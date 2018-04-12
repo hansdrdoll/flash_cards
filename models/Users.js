@@ -29,7 +29,7 @@ Users.deleteUser = id => {
 };
 
 // Find a specific user
-Users.findUser = username => {
+Users.findUsers = username => {
   return db.one("SELECT * FROM users WHERE username = $1", [username]);
 };
 

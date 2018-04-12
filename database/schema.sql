@@ -10,7 +10,7 @@ DROP TABLE progression;
 CREATE TABLE users(
   id BIGSERIAL PRIMARY KEY,
   username VARCHAR(255),
-  password_adjust VARCHAR(255),
+  password_digest VARCHAR(255),
   cards VARCHAR(255)
 );
 
