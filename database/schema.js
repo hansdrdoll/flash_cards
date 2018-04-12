@@ -16,6 +16,7 @@ CREATE TABLE users(
 CREATE TABLE decks(
   id BIGSERIAL PRIMARY KEY,
   title VARCHAR(255),
+  slug VARCHAR(255),
   user_id FOREIGN KEY REFERENCES users(id)
 );
 
