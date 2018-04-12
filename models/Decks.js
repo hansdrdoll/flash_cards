@@ -17,6 +17,14 @@ Decks.getPublicDecks = data => {
   ]);
 };
 
+Decks.create = data => {
+  return db.one(
+    `INSERT INTO decks (title, slug, user_id, public)
+    VALUES ($1, $2, $3, $4) RETURNING id`,
+    [data.title, data.slug, data.user_id, data.public]
+  );
+};
+
 Decks.update = deckData => {
   return db.none(
     "UPDATE decks SET title = $1, slug = $2, public = $3 WHERE id = $4",
