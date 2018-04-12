@@ -1,4 +1,4 @@
-# Flash Cards ok
+# Flash Cards
 
 A Node/React app to create and study flashcards by @Alexander, @BDMartinez, @hans
 
