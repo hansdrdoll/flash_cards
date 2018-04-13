@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import "./reset.css"
+import "./reset.css";
 import "./App.css";
-import Header from './Header';
+import Header from "./Header";
 import UserDecks from "./UserDecks";
 import SavedDecks from "./SavedDecks";
 import PublicDecks from "./PublicDecks";
-
 
 class App extends Component {
   render() {
