@@ -1,8 +1,8 @@
 import React from "react";
 import PublicDeck from "./PublicDeck";
 
-const PublicDecks = props => {
+const SavedDecks = props => {
   return <div />;
 };
 
-export default PublicDecks;
+export default SavedDecks;
