@@ -48,7 +48,7 @@ body {
   margin: 10px auto;
 }
 
-.user-decks {
+.user-decks, .saved-decks, .public-decks {
   display: grid;
   grid-template-columns: 1fr;
 }
@@ -62,8 +62,7 @@ body {
     align-items: center;
   }
 
-  .user-decks {
-    display: grid;
+.user-decks, .saved-decks, .public-decks {
     grid-template-columns: 1fr 1fr 1fr;
   }
 
