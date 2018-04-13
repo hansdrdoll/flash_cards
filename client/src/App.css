@@ -44,10 +44,15 @@ body {
 }
 
 .sidebar {
-  border:1px solid goldenrod;
+  border-right:1px solid lightblue;
   width: 20vw;
 }
 
 .sidebar h1 {
   font-size: 1.3em;
+}
+
+.deck-section {
+  border: 1px solid lightblue;
+  margin: 10px auto;
 }

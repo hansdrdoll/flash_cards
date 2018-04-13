@@ -11,9 +11,15 @@ class MainView extends Component {
   render() {
     return (
       <div className="main-view">
-        <UserDecks />
-        <SavedDecks />
-        <PublicDecks />
+        <div className="deck-section">
+          <UserDecks />
+        </div>
+        <div className="deck-section">
+          <SavedDecks />
+        </div>
+        <div className="deck-section">
+          <PublicDecks />
+        </div>
       </div>
     )
   }
