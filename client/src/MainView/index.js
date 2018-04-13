@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import UserDecks from "../UserDecks";
+import SavedDecks from "../SavedDecks";
+import PublicDecks from "../PublicDecks";
 
 class MainView extends Component {
   constructor(props) {
@@ -8,7 +11,9 @@ class MainView extends Component {
   render() {
     return (
       <div className="main-view">
-        <h1>Main View</h1>
+        <UserDecks />
+        <SavedDecks />
+        <PublicDecks />
       </div>
     )
   }
