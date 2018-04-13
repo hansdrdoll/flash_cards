@@ -6,22 +6,30 @@ import UserDecks from "./UserDecks";
 import SavedDecks from "./SavedDecks";
 import PublicDecks from "./PublicDecks";
 
-
 class App extends Component {
   render() {
     return (
       <div className="app">
         <Header />
         <div className="main-view">
-          <div className="deck-section">
-            <UserDecks />
-          </div>
-          <div className="deck-section">
-            <SavedDecks />
-          </div>
-          <div className="deck-section">
-            <PublicDecks />
-          </div>
+          {/* Route: dashboard */}
+            <div className="deck-section">
+              <h2>Your Decks</h2>
+              <UserDecks />
+            </div>
+
+            {/* if no saved decks, hide this section */}
+              <div className="deck-section">
+                <h2>Saved Decks</h2>
+                <SavedDecks />
+              </div>
+            {/* end of saved decks ternary */}
+
+            <div className="deck-section">
+              <h2>Public Decks</h2>
+              <PublicDecks />
+            </div>
+          {/* End of dashboard route */}
         </div>
       </div>
     );
