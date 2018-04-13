@@ -37,7 +37,7 @@ class PublicDecks extends Component {
         </p>
       );
     });
-    return <div>{publicDList}</div>;
+    return <div className="public-decks">{publicDList}</div>;
   }
 }
 

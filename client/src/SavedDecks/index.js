@@ -26,7 +26,7 @@ class SavedDecks extends Component {
         </p>
       );
     });
-    return <div>{savedDList}</div>;
+    return <div className="saved-decks">{savedDList}</div>;
   }
 }
 
