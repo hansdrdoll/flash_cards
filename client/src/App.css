@@ -5,7 +5,7 @@ body {
 
 .main-view {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column;
   text-align: center;
   align-items: stretch;
   height: 100vh;
@@ -27,7 +27,7 @@ body {
 }
 
 .header h2:hover {
-  background-color: rgba(255, 255, 255, .5);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .header-stretch {
@@ -48,13 +48,14 @@ body {
   margin: 10px auto;
 }
 
-.user-decks, .saved-decks, .public-decks {
+.user-decks,
+.saved-decks,
+.public-decks {
   display: grid;
   grid-template-columns: 1fr;
 }
 
 @media only screen and (min-width: 800px) {
-
   .header {
     height: 60px;
     display: flex;
@@ -62,7 +63,9 @@ body {
     align-items: center;
   }
 
-.user-decks, .saved-decks, .public-decks {
+  .user-decks,
+  .saved-decks,
+  .public-decks {
     grid-template-columns: 1fr 1fr 1fr;
   }
 
