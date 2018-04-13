@@ -17,6 +17,7 @@ npm manifest:
   {
     "dependencies": {
       "axios": "^0.18.0",
+      "bcryptjs": "^2.4.3",
       "bluebird": "^3.5.1",
       "body-parser": "^1.18.2",
       "cors": "^2.8.4",
@@ -67,6 +68,10 @@ Lockfile:
   balanced-match@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
+  
+  bcryptjs@^2.4.3:
+    version "2.4.3"
+    resolved "https://registry.yarnpkg.com/bcryptjs/-/bcryptjs-2.4.3.tgz#9ab5627b93e60621ff7cdac5da9733027df1d0cb"
   
   bluebird@^3.5.1:
     version "3.5.1"

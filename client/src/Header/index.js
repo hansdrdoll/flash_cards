@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Header extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -13,7 +13,7 @@ class Header extends Component {
         <h2 className="nav-item your-decks">Your Decks</h2>
         <h2 className="nav-item review">Review</h2>
       </div>
-    )
+    );
   }
 }
 
