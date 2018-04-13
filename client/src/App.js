@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import "./reset.css";
 import "./App.css";
 import Header from "./Header";
@@ -10,7 +11,11 @@ class App extends Component {
       <div className="app">
         <Header />
         <div className="main-view">
-          <Dashboard />
+          <Router>
+            <Route exact path="/" component={Dashboard} />
+            {/* <Route exact path="/" component={} /> */}
+            {/* <Route exact path="/" component={} /> */}
+          </Router>
         </div>
       </div>
     );
