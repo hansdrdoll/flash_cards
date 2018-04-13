@@ -1,5 +1,5 @@
 // List of dependancies
-const db = require("../database/db-connection/");
+const db = require("../database/db-connection");
 
 // Declare an object to affix the methods to
 const Saved = () => {};
