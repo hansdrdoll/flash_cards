@@ -1,12 +1,48 @@
 import React, { Component } from "react";
+import InputItem from "./input-item"
 
 class CreateDeck extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      cardInputs: [
+        { front: '', back: '', },
+        { front: '', back: '', },
+        { front: '', back: '', },
+        { front: '', back: '', },
+        { front: '', back: '', },
+      ],
+    };
+    this.renderCards = this.renderCards.bind(this);
+    this.addEmptyCard = this.addEmptyCard.bind(this);
   }
 
-  // componentDidMount() {}
+  componentDidMount() {
+    // const emptyObject = { id: null, front: '', back: '', }
+
+  }
+
+  renderCards () {
+    const cards = [];
+    for (let i = 1; i <= this.state.cardInputs.length; i++) {
+      cards.push(<InputItem key={i} number={i} />);
+    }
+    return cards;
+  }
+
+  addEmptyCard (evt) {
+    evt.preventDefault();
+    // if a new blank card is needed,
+    // push a new object to the this.state.cardInputs array
+    const emptyObject = { id: null, front: '', back: '', }
+      this.setState({
+        cardInputs: [...this.state.cardInputs, emptyObject]
+      })
+  }
+
+  handleInput(evt, index) {
+
+  }
 
   render() {
     return (
@@ -14,10 +50,8 @@ class CreateDeck extends Component {
         <h2>Create Deck</h2>
         <form>
           <input type="text" placeholder="Deck Title" />
-          <div className="input-card">
-            <input type="text" placeholder="Front" />
-            <input type="text" placeholder="Back" />
-          </div>
+            {this.renderCards()}
+            <button onClick={this.addEmptyCard}>Add Card</button>
         </form>
       </div>
     )
