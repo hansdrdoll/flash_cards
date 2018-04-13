@@ -1,4 +1,4 @@
-const db = require("../database/db-connection");
+const db = require("../database/db-connection/flash_cards");
 
 const Users = {};
 
