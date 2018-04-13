@@ -3,7 +3,7 @@ const EXPRESS = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-const db = reqiure("./database/db-connection");
+const db = require("./database/db-connection");
 
 // Require bcrypt
 const bcrypt = require("bcryptjs");
@@ -20,11 +20,11 @@ const Progression = require("./models/Progression");
 const app = EXPRESS();
 
 // Create a get route to the api for all user information
-app.get("/api/users", (request, response) => {
+app.get("/api/user", (request, response) => {
   // Extract the data from the body
   const data = request.body;
   // Get all the users and return a json object
-  Users.findAllUser().then(data => {
+  Users.findUser().then(data => {
     response.json(data);
   });
 });
@@ -42,7 +42,7 @@ app.post("api/user/new", (request, response) => {
 
 // Create a route to Edit exiting user
 app.put("/api/user/:id/edit", (request, response) => {
-  const id = request.params.id;
+  const id = Number(request.params.id);
   // Extract the data from the  body
   const data = request.body;
   // Update the user row in the database

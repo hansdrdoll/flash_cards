@@ -29,8 +29,8 @@ Users.deleteUser = id => {
 };
 
 // Find a specific user
-Users.findUsers = username => {
-  return db.one("SELECT * FROM users WHERE username = $1", [username]);
+Users.findUser = username => {
+  return db.one("SELECT * FROM users WHERE id = $1", [username]);
 };
 
 // Export the model functions
