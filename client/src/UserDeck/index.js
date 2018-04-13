@@ -1,13 +1,14 @@
 import React from "react";
 
 const UserDeck = props => {
+  const { deckItem } = props;
   return (
     <div>
       <div className="main-deck-content">
-        <h1> This is the decks Title. </h1>
+        <h1> Deck number {props.deckItem.id}. </h1>
       </div>
       <div className="footer">
-        <p className="numberOfCards">12</p>
+        <p className="numberOfCards">{props.deckItem.title}</p>
         <button className="to-review">review ▶️ </button>
         <button className="to-edit">edit</button>
       </div>
