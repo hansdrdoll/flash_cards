@@ -107,6 +107,29 @@ app.post("/api/deck/:id", (request, response) => {
 
 //--- **CARDS** ---//
 
+// Create a route insert a new card into the database
+app.post("/api/deck/:id/card/new", (request, response) => {
+  // Extract the id from the url
+  const id = request.params.id;
+  // Extract the data from the URL
+  const data = request.body;
+  // Insert a new row with the User input into the cards table
+  Cards.create(data).then(data => {
+    response.json(data);
+  });
+});
+
+// Create a route to edit an existing card
+app.put("/api/deck/:id/card/edit", (request, response) => {
+  // Extract the data from the URL
+  const data = request.body;
+  // Update the request of the
+  Cards.update(data).then(data => {
+    // Return a json object
+    response.json(data);
+  });
+});
+
 // Create a route to get all the cards in the database
 app.get("/api/deck/:id/cards", (request, response) => {
   // Extract the data from the URL
@@ -118,6 +141,29 @@ app.get("/api/deck/:id/cards", (request, response) => {
   });
 });
 
-app.get("/api/card/");
+//--- **Saved_Decks** ---//
+
+// Create a route to POST to save a deck to a user
+app.post("/api/saved/:deck_id/new", (request, response) => {
+  // Extract the id from the URL
+  const id = request.params.id;
+  // Send a request to the database to place the corresponding deck ID in the saved_decks join table
+  Saved.create(id).then(data => {
+    response.json(data);
+  });
+});
+
+// Create a route to get all the user saved decks
+app.get("/api/saved/:deck_id", (request, response) => {
+  const id = request.params.id;
+  // Extract the data from the URL
+  const data = request.body;
+  // Get all the saved deck associated with the user's ID
+  Saved.savedDecks(id).then(data => {
+    // Then return a json object
+    response.json(data);
+  });
+});
+
 // Set the listening port for the server and log a confimatory message
 app.listen(4567, () => console.log(`Port 4567 is up!`));
