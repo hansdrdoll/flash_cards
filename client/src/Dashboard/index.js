@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import UserDecks from "./UserDecks";
-import PublicDecks from "./PublicDecks";
-import SavedDecks from "./SavedDecks";
+import UserDecks from "../UserDecks";
+import PublicDecks from "../PublicDecks";
+import SavedDecks from "../SavedDecks";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -15,5 +15,3 @@ class Dashboard extends Component {
     return <div />;
   }
 }
-
-export default Dashboard;

@@ -16,9 +16,25 @@ body {
   text-align: center;
   margin: 0;
   height: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
 }
 
-.header, .main-view h1 {
+.header h2 {
+  padding: 0 20px;
+}
+
+.header h2:hover {
+  background-color: rgba(255, 255, 255, .5);
+}
+
+.header-stretch {
+  flex-grow: 1;
+}
+
+.main-view h1 {
   font-size: 1.5em;
 
 }
@@ -29,6 +45,7 @@ body {
 
 .sidebar {
   border:1px solid goldenrod;
+  width: 20vw;
 }
 
 .sidebar h1 {

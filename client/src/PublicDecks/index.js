@@ -1,5 +1,5 @@
 import React from "react";
-import PublicDeck from "./PublicDeck";
+import PublicDeck from "../PublicDeck";
 
 const PublicDecks = props => {
   return <div />;
