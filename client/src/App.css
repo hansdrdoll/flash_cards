@@ -16,9 +16,21 @@ body {
   text-align: center;
   margin: 0;
   height: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
 }
 
-.header, .main-view h1 {
+.header h2 {
+  padding: 0 20px;
+}
+
+.header h2:hover {
+  background-color: rgba(255, 255, 255, .5);
+}
+
+.main-view h1 {
   font-size: 1.5em;
 
 }
