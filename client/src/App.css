@@ -3,9 +3,9 @@ body {
   box-sizing: border-box;
 }
 
-.wrapper {
+.main-view {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   text-align: center;
   align-items: stretch;
   height: 100vh;
@@ -15,22 +15,62 @@ body {
   background-color: lightblue;
   text-align: center;
   margin: 0;
-  height: 60px;
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
 }
 
-.header, .main-view h1 {
+.header h2 {
+  padding: 0 20px;
+}
+
+.header h2:hover {
+  background-color: rgba(255, 255, 255, .5);
+}
+
+.header-stretch {
+  flex-grow: 1;
+}
+
+.header-desktop {
+  display: none;
+}
+
+.main-view h1 {
   font-size: 1.5em;
-
 }
 
-.main-view {
-  flex: 1 auto;
+.deck-section {
+  border: 1px solid lightblue;
+  width: 90vw;
+  margin: 10px auto;
 }
 
-.sidebar {
-  border:1px solid goldenrod;
+.user-decks, .saved-decks, .public-decks {
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
-.sidebar h1 {
-  font-size: 1.3em;
+@media only screen and (min-width: 800px) {
+
+  .header {
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+.user-decks, .saved-decks, .public-decks {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .header-desktop {
+    display: flex;
+  }
+
+  .header-mobile {
+    display: none;
+  }
 }
