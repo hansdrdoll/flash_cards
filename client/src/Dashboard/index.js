@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import UserDecks from "../UserDecks";
-import PublicDecks from "../PublicDecks";
-import SavedDecks from "../SavedDecks";
+import React, { Component } from 'react';
+import UserDecks from '../UserDecks';
+import PublicDecks from '../PublicDecks';
+import SavedDecks from '../SavedDecks';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -12,26 +12,26 @@ class Dashboard extends Component {
   componentDidMount() {}
 
   render() {
-    return(
+    return (
       <div>
-      <div className="deck-section">
-        <h2>Your Decks</h2>
-        <UserDecks />
-      </div>
+        <div className="deck-section">
+          <h2>Your Decks</h2>
+          <UserDecks />
+        </div>
 
-      {/* if no saved decks, hide this section */}
+        {/* if no saved decks, hide this section */}
         <div className="deck-section">
           <h2>Saved Decks</h2>
           <SavedDecks />
         </div>
-      {/* end of saved decks ternary */}
+        {/* end of saved decks ternary */}
 
-      <div className="deck-section">
-        <h2>Public Decks</h2>
-        <PublicDecks />
+        <div className="deck-section">
+          <h2>Public Decks</h2>
+          <PublicDecks />
+        </div>
       </div>
-    </div>
-    )
+    );
   }
 }
 
