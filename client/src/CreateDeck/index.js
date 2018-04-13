@@ -5,6 +5,7 @@ class CreateDeck extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      newTitle: '',
       cardInputs: [
         { front: '', back: '' },
         { front: '', back: '' },
@@ -17,6 +18,8 @@ class CreateDeck extends Component {
     this.addEmptyCard = this.addEmptyCard.bind(this);
     this.handleFrontInput = this.handleFrontInput.bind(this);
     this.handleBackInput = this.handleBackInput.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   // componentDidMount() {
@@ -65,15 +68,34 @@ class CreateDeck extends Component {
     });
   }
 
+  handleTitleChange(evt) {
+    this.setState({
+      newTitle: evt.target.value,
+    })
+  }
+
+  handleSubmit(evt) {
+    evt.preventDefault();
+    console.log("Submitted");
+  }
+
   render() {
     return (
       <div className="create-deck">
         <h2>Create Deck</h2>
-        <form>
-          <input type="text" placeholder="Deck Title" />
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            placeholder="Deck Title"
+            value={this.state.newTitle}
+            onChange={this.handleTitleChange}
+          />
           {this.renderCards()}
           <button type="button" onClick={this.addEmptyCard}>
             Add Card
+          </button>
+          <button type="submit">
+            Submit
           </button>
         </form>
       </div>
