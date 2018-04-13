@@ -3,9 +3,9 @@ body {
   box-sizing: border-box;
 }
 
-.wrapper {
+.main-view {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   text-align: center;
   align-items: stretch;
   height: 100vh;
@@ -36,23 +36,20 @@ body {
 
 .main-view h1 {
   font-size: 1.5em;
-
-}
-
-.main-view {
-  flex: 1 auto;
-}
-
-.sidebar {
-  border-right:1px solid lightblue;
-  width: 20vw;
-}
-
-.sidebar h1 {
-  font-size: 1.3em;
 }
 
 .deck-section {
   border: 1px solid lightblue;
+  width: 90vw;
   margin: 10px auto;
+}
+
+@media only screen and (min-width: 960px) {
+  .wrapper {
+
+  }
+
+  body {
+    background-color: black;
+  }
 }
