@@ -6,7 +6,7 @@ const Users = {};
 Users.createUser = data => {
   // Add a row to database and return the id
   return db.one(
-    "INSERT INTO users(username, password_adjust, cards ) VALUES($1, $2, $3, $4) RETURNING id",
+    "INSERT INTO users(username, password_adjust) VALUES($1, $2, $3, $4) RETURNING id",
     // Reference the values in the database
     [data.user_name, data.password_adjust, data.cards]
   );
@@ -29,8 +29,8 @@ Users.deleteUser = id => {
 };
 
 // Find a specific user
-Users.findUsers = username => {
-  return db.one("SELECT * FROM users WHERE username = $1", [username]);
+Users.findUser = username => {
+  return db.one("SELECT * FROM users WHERE id = $1", [username]);
 };
 
 // Export the model functions

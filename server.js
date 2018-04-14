@@ -3,7 +3,7 @@ const EXPRESS = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-const db = reqiure("./database/db-connection");
+const db = require("./database/db-connection");
 
 // Require bcrypt
 const bcrypt = require("bcryptjs");
@@ -20,11 +20,11 @@ const Progression = require("./models/Progression");
 const app = EXPRESS();
 
 // Create a get route to the api for all user information
-app.get("/api/users", (request, response) => {
+app.get("/api/user", urlencodedParser, (request, response) => {
   // Extract the data from the body
   const data = request.body;
   // Get all the users and return a json object
-  Users.findAllUser().then(data => {
+  Users.findUser().then(data => {
     response.json(data);
   });
 });
@@ -42,7 +42,7 @@ app.post("api/user/new", (request, response) => {
 
 // Create a route to Edit exiting user
 app.put("/api/user/:id/edit", (request, response) => {
-  const id = request.params.id;
+  const id = Number(request.params.id);
   // Extract the data from the  body
   const data = request.body;
   // Update the user row in the database
@@ -53,9 +53,9 @@ app.put("/api/user/:id/edit", (request, response) => {
 });
 
 // Create a get route to the api for a specified users
-app.get("/api/user/:id", (request, response) => {
+app.get("/api/user/:id", urlencodedParser, (request, response) => {
   // Extract the id from the request
-  const id = request.params.id;
+  const id = Number(request.params.id);
   // Get the user that corresponds to the passed ID
   Users.findUser(id).then(userData => {
     // Send the response with the user data to the browser in the form of a json
@@ -64,17 +64,17 @@ app.get("/api/user/:id", (request, response) => {
 });
 
 // Create a get route that returns all decks associated with an individual user id
-app.get("/api/decks/:user_id", (request, response) => {
+app.get("/api/decks/:user_id", urlencodedParser, (request, response) => {
   // Extract the data from the url
-  const id = request.params.id;
+  const user_id = parseInt(request.params.user_id);
   // Get all the users decks from the database and return a json object
-  Decks.getUserDecks(id).then(data => {
+  Decks.getUserDecks(user_id).then(data => {
     response.json(data);
   });
 });
 
 // Create a new a route to post a new deck to the database
-app.post("/api/deck/new", (request, response) => {
+app.post("/api/deck/new", urlencodedParser, (request, response) => {
   // Extract the data from the url
   const data = request.body;
   // Insert the user input a new row into the database with the corresponding input
@@ -85,7 +85,7 @@ app.post("/api/deck/new", (request, response) => {
 });
 
 // Create a route to Edit and existing deck
-app.put("/api/deck/:id/edit", (response, request) => {
+app.put("/api/deck/:deck_id/edit", urlencodedParser, (response, request) => {
   // Extract the data from the URL
   const data = request.body;
   // Update the row that corresponding to the id extracting
@@ -96,9 +96,9 @@ app.put("/api/deck/:id/edit", (response, request) => {
 });
 
 // Create a route that deletes and existing decks
-app.post("/api/deck/:id", (request, response) => {
+app.post("/api/deck/:deck_id", (request, response) => {
   // Extract the id from the URL
-  const id = request.params.id;
+  const id = Number(request.params.id);
   // Delete the row with corresponding id
   Decks.delete(id).then(data => {
     response.json(data);
@@ -108,9 +108,10 @@ app.post("/api/deck/:id", (request, response) => {
 //--- **CARDS** ---//
 
 // Create a route insert a new card into the database
-app.post("/api/deck/:id/card/new", (request, response) => {
+app.post("/api/deck/:deck_id/card/new", (request, response) => {
   // Extract the id from the url
   const id = request.params.id;
+  console.log(id);
   // Extract the data from the URL
   const data = request.body;
   // Insert a new row with the User input into the cards table
@@ -120,7 +121,7 @@ app.post("/api/deck/:id/card/new", (request, response) => {
 });
 
 // Create a route to edit an existing card
-app.put("/api/deck/:id/card/edit", (request, response) => {
+app.put("/api/deck/:deck_id/card/edit", (request, response) => {
   // Extract the data from the URL
   const data = request.body;
   // Update the request of the
@@ -131,11 +132,13 @@ app.put("/api/deck/:id/card/edit", (request, response) => {
 });
 
 // Create a route to get all the cards in the database
-app.get("/api/deck/:id/cards", (request, response) => {
+app.get("/api/deck/:deck_id/cards", urlencodedParser, (request, response) => {
+  const deck_id = request.params.deck_id;
+  console.log(deck_id);
   // Extract the data from the URL
   const data = request.body;
   // Get all the cards
-  Cards.findAll(data).then(data => {
+  Cards.findAll(deck_id).then(data => {
     // Then return in a json object
     response.json(data);
   });
@@ -146,7 +149,7 @@ app.get("/api/deck/:id/cards", (request, response) => {
 // Create a route to POST to save a deck to a user
 app.post("/api/saved/:deck_id/new", (request, response) => {
   // Extract the id from the URL
-  const id = request.params.id;
+  const id = Number(request.params.deck_id);
   // Send a request to the database to place the corresponding deck ID in the saved_decks join table
   Saved.create(id).then(data => {
     response.json(data);

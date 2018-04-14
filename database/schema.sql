@@ -6,8 +6,7 @@ CREATE DATABASE flash_cards;
 CREATE TABLE users(
   id BIGSERIAL PRIMARY KEY,
   username VARCHAR(255),
-  password_digest VARCHAR(255),
-  cards VARCHAR(255)
+  password_digest VARCHAR(255)
 );
 
 CREATE TABLE decks(
