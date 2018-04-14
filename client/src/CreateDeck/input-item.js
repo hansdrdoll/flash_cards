@@ -1,13 +1,22 @@
-import React from "react";
+import React from 'react';
+import { TextArea, Form, Input, Label, Menu } from 'semantic-ui-react';
 
 const InputItem = props => {
+  const { arrIndex } = props;
   return (
-    <div>
-      <div className="input-card">
-        {props.arrIndex + 1}
-        <input type="text" placeholder="Front" index={props.arrIndex} onChange={props.handleFrontInput} />
-        <input type="text" placeholder="Back" index={props.arrIndex} onChange={props.handleBackInput} />
-      </div>
+    <div className="input-card">
+      <Label>{arrIndex + 1}</Label>
+      <TextArea
+        autoheight
+        placeholder="Front"
+        rows="2"
+        onChange={e => props.handleFrontInput(arrIndex, e)}
+      />
+      <TextArea
+        autoheight
+        placeholder="Back"
+        onChange={e => props.handleBackInput(arrIndex, e)}
+      />
     </div>
   );
 };

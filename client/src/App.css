@@ -10,7 +10,6 @@ body {
   flex-flow: column;
   text-align: center;
   align-items: stretch;
-  height: 100vh;
 }
 
 .header-desktop {

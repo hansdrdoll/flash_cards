@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 import React, { Component } from "react";
 import InputItem from "./input-item";
 import "./style.css";
+=======
+import React, { Component } from 'react';
+import { Input, Button, Form } from 'semantic-ui-react';
+import InputItem from './input-item';
+import './style.css';
+>>>>>>> 91dbb07077d102bc7ab046b6cbfe53f396052c3b
 
 class CreateDeck extends Component {
   constructor(props) {
@@ -49,8 +56,7 @@ class CreateDeck extends Component {
     });
   }
 
-  handleFrontInput(evt) {
-    const index = evt.target.attributes.index.value;
+  handleFrontInput(index, evt) {
     const value = evt.target.value;
     const tempState = this.state.cardInputs;
     tempState[index].front = value;
@@ -59,8 +65,7 @@ class CreateDeck extends Component {
     });
   }
 
-  handleBackInput(evt) {
-    const index = evt.target.attributes.index.value;
+  handleBackInput(index, evt) {
     const value = evt.target.value;
     const tempState = this.state.cardInputs;
     tempState[index].back = value;
@@ -71,32 +76,37 @@ class CreateDeck extends Component {
 
   handleTitleChange(evt) {
     this.setState({
+<<<<<<< HEAD
       newTitle: evt.target.value
+=======
+      newTitle: evt.target.value,
+>>>>>>> 91dbb07077d102bc7ab046b6cbfe53f396052c3b
     });
   }
 
   handleSubmit(evt) {
     evt.preventDefault();
-    console.log("Submitted");
+    // TODO: make this post data
+    console.log('Submitted');
   }
 
   render() {
     return (
       <div className="create-deck">
         <h2>Create Deck</h2>
-        <form onSubmit={this.handleSubmit}>
-          <input
+        <Form onSubmit={this.handleSubmit}>
+          <Input
             type="text"
             placeholder="Deck Title"
             value={this.state.newTitle}
             onChange={this.handleTitleChange}
           />
           {this.renderCards()}
-          <button type="button" onClick={this.addEmptyCard}>
+          <Button type="button" onClick={this.addEmptyCard}>
             Add Card
-          </button>
-          <button type="submit">Submit</button>
-        </form>
+          </Button>
+            <Button type="submit">Submit</Button>
+        </Form>
       </div>
     );
   }

@@ -14,7 +14,7 @@ const Header = props => {
           <Menu.Item
             as={NavLink}
             to="/dashboard"
-            name='Dashboard'
+            name="Dashboard"
             // active={activeItem === 'editorials'}
             // onClick={this.handleItemClick}
           >
@@ -24,60 +24,43 @@ const Header = props => {
             {/* <Menu.Item>
               <Input className='icon' icon='search' placeholder='Search...' />
             </Menu.Item> */}
-            <Menu.Item
-              as={NavLink}
-              to="/profile"
-              name='profile'
-            >
+            <Menu.Item as={NavLink} to="/profile" name="profile">
               <img className="profile-img" src={UserImg} alt="user" />
-          </Menu.Item>
+            </Menu.Item>
           </Menu.Menu>
         </Menu>
       </div>
       {/* Desktop View */}
       <div className="header-desktop">
-      <Menu pointing secondary>
-        <Menu.Item
-          as={NavLink}
-          to="/dashboard"
-          name='Dashboard'
-          // active={activeItem === 'editorials'}
-          // onClick={this.handleItemClick}
-        >
-          Dashboard
-        </Menu.Item>
-        <Menu.Item
-          as={NavLink}
-          to="/decks/new"
-          name='CreateDeck'
-          // active={activeItem === 'editorials'}
-          // onClick={this.handleItemClick}
-        >
-          Create Deck
-        </Menu.Item>
-        <Menu.Item
-          as={NavLink}
-          to="/Play"
-          name='Review'
-          // active={activeItem === 'editorials'}
-          // onClick={this.handleItemClick}
-        >
-          Review
-        </Menu.Item>
-        <Menu.Menu position="right">
-          {/* <Menu.Item>
-            <Input className='icon' icon='search' placeholder='Search...' />
-          </Menu.Item> */}
+        <Menu pointing secondary>
           <Menu.Item
             as={NavLink}
-            to="/profile"
-            name='profile'
+            to="/dashboard"
+            name="Dashboard"
+            // active={activeItem === 'editorials'}
+            // onClick={this.handleItemClick}
           >
-            <img className="profile-img" src={UserImg} alt="user" />
-        </Menu.Item>
-        </Menu.Menu>
-      </Menu>
-    </div>
+            Dashboard
+          </Menu.Item>
+          <Menu.Item
+            as={NavLink}
+            to="/decks/new"
+            name="CreateDeck"
+            // active={activeItem === 'editorials'}
+            // onClick={this.handleItemClick}
+          >
+            Create Deck
+          </Menu.Item>
+          <Menu.Menu position="right">
+            {/* <Menu.Item>
+            <Input className='icon' icon='search' placeholder='Search...' />
+          </Menu.Item> */}
+            <Menu.Item as={NavLink} to="/profile" name="profile">
+              <img className="profile-img" src={UserImg} alt="user" />
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+      </div>
     </div>
   );
 };
