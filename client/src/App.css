@@ -38,6 +38,15 @@ body {
   display: none;
 }
 
+.menu {
+  margin-top: 0 !important;
+}
+
+.profile-img {
+  /* height: 18px !important; */
+  width: 18px !important;
+}
+
 .main-view h1 {
   font-size: 1.5em;
 }
@@ -70,7 +79,7 @@ body {
   }
 
   .header-desktop {
-    display: flex;
+    display: inherit;
   }
 
   .header-mobile {

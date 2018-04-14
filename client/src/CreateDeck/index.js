@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import InputItem from './input-item';
+import "./style.css"
 
 class CreateDeck extends Component {
   constructor(props) {

@@ -15,10 +15,11 @@ class App extends Component {
           <div className="all">
             <Header />
             <div className="main-view">
+              {/* This first component should eventually be the auth */}
               <Route exact path="/" component={Dashboard} />
+              <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/play" component={GamePlay} />
               <Route exact path="/decks/new" component={CreateDeck} />
-              {/* <Route exact path="/" component={} /> */}
             </div>
           </div>
         </Router>
