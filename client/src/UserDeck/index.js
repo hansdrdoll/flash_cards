@@ -14,7 +14,6 @@ const UserDeck = props => {
       {/* </Button.Group> */}
     </Card.Content>
   </Card>
-
   );
 };
 
