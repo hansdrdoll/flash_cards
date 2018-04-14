@@ -6,6 +6,8 @@ import Header from "./Header";
 import Dashboard from "./Dashboard";
 import CreateDeck from "./CreateDeck";
 import GamePlay from "./GamePlay";
+import GameNormal from "./GameNormal";
+import GameTailored from "./GameTailored";
 
 class App extends Component {
   render() {
@@ -19,6 +21,8 @@ class App extends Component {
               <Route exact path="/" component={Dashboard} />
               <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/play" component={GamePlay} />
+              <Route exact path="/play/normal" component={GameNormal} />
+              <Route exact path="/play/tailored" component={GameTailored} />
               <Route exact path="/decks/new" component={CreateDeck} />
             </div>
           </div>
