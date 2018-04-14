@@ -3,12 +3,12 @@ const db = require("../database/db-connection");
 const Users = {};
 
 // Create a new user in the database
-Users.createUser = data => {
+Users.create = data => {
   // Add a row to database and return the id
   return db.one(
-    "INSERT INTO users(username, password_adjust) VALUES($1, $2, $3, $4) RETURNING id",
+    "INSERT INTO users(username, password_digest) VALUES($1, $2) RETURNING id",
     // Reference the values in the database
-    [data.user_name, data.password_adjust, data.cards]
+    [data.username, data.password_digest]
   );
 };
 

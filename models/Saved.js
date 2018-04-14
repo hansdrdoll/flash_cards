@@ -18,21 +18,21 @@ Saved.create = id => {
 };
 
 // Create a function that returns all a users saved decks
-Saved.savedDecks = id => {
+Saved.savedDecks = user_id => {
   // Return any cards that matches the deck ID passed to the database
   return db.any(
-    `SELECT * FROM save_decks
-     JOIN user ON cards.user_id = user.id
-     JOIN decks on cards.deck_id = deck.id
+    `SELECT * FROM saved_decks
+     JOIN user ON decks.user_id = user.id
+     JOIN decks on user.deck_id = deck.id
      WHERE user_id = $1`,
-    [data.id]
+    [user_id]
   );
 };
 
 // Created a function that deletes saved decks from the save_decks table
 Saved.delete = id => {
   return db.result(
-    `DELETE FROM save_decks
+    `DELETE FROM saved_decks
      JOIN decks on decks.deck_id = cards.id
      WHERE deck_id = $1`,
     [id]

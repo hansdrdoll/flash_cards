@@ -3,6 +3,7 @@ const EXPRESS = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
+const jsonParser = bodyParser.json();
 const db = require("./database/db-connection");
 
 // Require bcrypt
@@ -14,10 +15,27 @@ const salt = "$2a$10$iEe24ElSjus.JhY49OhY5u";
 const Users = require("./models/Users");
 const Decks = require("./models/Decks");
 const Cards = require("./models/Cards");
+const Saved = require("./models/Saved");
 const Progression = require("./models/Progression");
 
 // Specify express as the engine
 const app = EXPRESS();
+
+// Create a POST route to the api for creating a new user
+app.post("/api/user/new", jsonParser, (request, response) => {
+  // Extract the data from the body
+  const { username, password_digest } = request.body;
+  const data = {
+    username: username,
+    password_digest: password_digest
+  };
+
+  // Insert the user inputs into the database in a new row in the corresponding fields
+  Users.create(data).then(data => {
+    // Once the POST is made return then json response
+    response.json({ message: "ok" });
+  });
+});
 
 // Create a get route to the api for all user information
 app.get("/api/user", urlencodedParser, (request, response) => {
@@ -25,17 +43,6 @@ app.get("/api/user", urlencodedParser, (request, response) => {
   const data = request.body;
   // Get all the users and return a json object
   Users.findUser().then(data => {
-    response.json(data);
-  });
-});
-
-// Create a POST route to the api for creating a new user
-app.post("api/user/new", (request, response) => {
-  // Extract the data from the body
-  const data = request.body;
-  // Insert the user inputs into the database in a new row in the corresponding fields
-  Users.createUser(data).then(data => {
-    // Once the POST is made return then json response
     response.json(data);
   });
 });
@@ -74,13 +81,13 @@ app.get("/api/decks/:user_id", urlencodedParser, (request, response) => {
 });
 
 // Create a new a route to post a new deck to the database
-app.post("/api/deck/new", urlencodedParser, (request, response) => {
+app.post("/api/deck/new", jsonParser, (request, response) => {
   // Extract the data from the url
   const data = request.body;
   // Insert the user input a new row into the database with the corresponding input
   Decks.create(data).then(data => {
     // Once the POST is made return then json response
-    response.json(data);
+    response.json({ message: "ok" });
   });
 });
 
@@ -125,10 +132,14 @@ app.put("/api/deck/:deck_id/card/edit", (request, response) => {
   // Extract the data from the URL
   const data = request.body;
   // Update the request of the
-  Cards.update(data).then(data => {
-    // Return a json object
-    response.json(data);
-  });
+  Cards.update(data)
+    .then(data => {
+      // Return a json object
+      response.json(data);
+    })
+    .catch(err => {
+      response.json({ message: error });
+    });
 });
 
 // Create a route to get all the cards in the database
@@ -157,12 +168,13 @@ app.post("/api/saved/:deck_id/new", (request, response) => {
 });
 
 // Create a route to get all the user saved decks
-app.get("/api/saved/:deck_id", (request, response) => {
-  const id = request.params.id;
+app.get("/api/saved/:user_id", (request, response) => {
+  const user_id = request.params.user_id;
+  console.log(user_id);
   // Extract the data from the URL
   const data = request.body;
   // Get all the saved deck associated with the user's ID
-  Saved.savedDecks(id).then(data => {
+  Saved.savedDecks(user_id).then(data => {
     // Then return a json object
     response.json(data);
   });
