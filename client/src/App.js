@@ -16,8 +16,8 @@ class App extends Component {
             <Header />
             <div className="main-view">
               <Route exact path="/" component={Dashboard} />
-              <Route exact path="/play" component={GamePlay} />
               <Route exact path="/decks/new" component={CreateDeck} />
+              <Route exact path="/play" component={GamePlay} />
               {/* <Route exact path="/" component={} /> */}
             </div>
           </div>
