@@ -6,7 +6,7 @@ const Users = {};
 Users.createUser = data => {
   // Add a row to database and return the id
   return db.one(
-    "INSERT INTO users(username, password_adjust, cards ) VALUES($1, $2, $3, $4) RETURNING id",
+    "INSERT INTO users(username, password_adjust) VALUES($1, $2, $3, $4) RETURNING id",
     // Reference the values in the database
     [data.user_name, data.password_adjust, data.cards]
   );
