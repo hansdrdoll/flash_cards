@@ -1,6 +1,8 @@
+/* TODO: clean up unused props */
+
 body {
   margin: 0;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 
 .main-view {
@@ -9,29 +11,6 @@ body {
   text-align: center;
   align-items: stretch;
   height: 100vh;
-}
-
-.header {
-  background-color: lightblue;
-  text-align: center;
-  margin: 0;
-  height: 70px;
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
-}
-
-.header h2 {
-  padding: 0 20px;
-}
-
-.header h2:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-.header-stretch {
-  flex-grow: 1;
 }
 
 .header-desktop {
@@ -52,31 +31,24 @@ body {
 }
 
 .deck-section {
-  border: 1px solid lightblue;
-  width: 90vw;
+  /* border: 1px solid lightblue; */
+  /* width: 90vw; */
   margin: 10px auto;
 }
 
 .user-decks,
 .saved-decks,
 .public-decks {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
-@media only screen and (min-width: 800px) {
-  .header {
-    height: 60px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
+.card {
+  margin: 10px !important;
+}
 
-  .user-decks,
-  .saved-decks,
-  .public-decks {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
+@media only screen and (min-width: 700px) {
 
   .header-desktop {
     display: inherit;
@@ -85,4 +57,11 @@ body {
   .header-mobile {
     display: none;
   }
+}
+
+@media only screen and (min-width: 1000px) {
+  .header {
+  }
+
+
 }

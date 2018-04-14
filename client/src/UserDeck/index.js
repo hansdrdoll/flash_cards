@@ -1,18 +1,20 @@
 import React from "react";
+import { Card, Button } from 'semantic-ui-react';
 
 const UserDeck = props => {
   const { deckItem } = props;
   return (
-    <div>
-      <div className="main-deck-content">
-        <h1> Deck number {props.deckItem.id}. </h1>
-      </div>
-      <div className="footer">
-        <p className="numberOfCards">{props.deckItem.title}</p>
-        <button className="to-review">review ▶️ </button>
-        <button className="to-edit">edit</button>
-      </div>
-    </div>
+    <Card>
+    <Card.Content header={deckItem.title} />
+    {/* <Card.Content description={"deck number " + props.deckItem.id} /> */}
+    <Card.Content extra>
+      {/* <Button.Group> */}
+        <Button floated='left'>Review</Button>
+        <Button floated='right'>Edit</Button>
+      {/* </Button.Group> */}
+    </Card.Content>
+  </Card>
+
   );
 };
 

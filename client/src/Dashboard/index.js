@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Header, Segment, Divider } from 'semantic-ui-react'
 import UserDecks from '../UserDecks';
 import PublicDecks from '../PublicDecks';
 import SavedDecks from '../SavedDecks';
@@ -15,20 +16,30 @@ class Dashboard extends Component {
     return (
       <div>
         <div className="deck-section">
-          <h2>Your Decks</h2>
+          <Header as='h2' attached='top'>
+          Your Decks</Header>
+          <Segment attached>
           <UserDecks />
+        </Segment>
         </div>
-
+        {/* <Divider section /> */}
         {/* if no saved decks, hide this section */}
         <div className="deck-section">
-          <h2>Saved Decks</h2>
-          <SavedDecks />
+          <Header as='h2' attached='top'>
+          Saved Decks</Header>
+          <Segment attached>
+            <SavedDecks />
+          </Segment>
         </div>
+        {/* <Divider section /> */}
         {/* end of saved decks ternary */}
 
         <div className="deck-section">
-          <h2>Public Decks</h2>
-          <PublicDecks />
+          <Header as='h2' attached='top'>
+          Public Decks</Header>
+          <Segment attached>
+            <PublicDecks />
+          </Segment>
         </div>
       </div>
     );
