@@ -92,10 +92,14 @@ class GameNormal extends Component {
             </div>
             <footer className="good-or-nah">
               <button onClick={this.nextCard} className="good">
-                😁
+                <span role="img" aria-label="grin">
+                  😁
+                </span>
               </button>
               <button onClick={this.nextCard} className="nah">
-                😰
+                <span role="img" aria-label="nervous">
+                  😰
+                </span>
               </button>
             </footer>
           </div>
@@ -104,12 +108,24 @@ class GameNormal extends Component {
             <h1>Would you like to start over?</h1>
             <Link to="/play">
               <button className="end-of-game" onClick={this.resetCards}>
-                🙏 YES, PLEASE! 🙏
+                <span role="img" aria-label="pray">
+                  🙏
+                </span>{" "}
+                YES, PLEASE!{" "}
+                <span role="img" aria-label="pray">
+                  🙏
+                </span>
               </button>
             </Link>
             <Link to="/">
               <button className="end-of-game">
-                🤙 No thanks! I'm okay. 👍
+                <span role="img" aria-label="shaka">
+                  🤙
+                </span>{" "}
+                No thanks! I'm okay.{" "}
+                <span role="img" aria-label="thumbsup">
+                  👍
+                </span>
               </button>
             </Link>
           </div>

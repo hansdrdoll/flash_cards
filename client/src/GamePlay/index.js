@@ -12,10 +12,20 @@ class GamePlay extends Component {
           tailored to you?
         </h1>
         <Link to="/play/normal">
-          <button className="game-type">normal 😊</button>
+          <button className="game-type">
+            normal{" "}
+            <span role="img" aria-label="smile-blush">
+              😊
+            </span>
+          </button>
         </Link>
         <Link to="/play/tailored">
-          <button className="game-type">tailored 🤯</button>
+          <button className="game-type">
+            tailored{" "}
+            <span role="img" aria-label="boom">
+              🤯
+            </span>
+          </button>
         </Link>
       </div>
     );

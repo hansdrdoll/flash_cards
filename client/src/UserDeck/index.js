@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 const UserDeck = props => {
   const { deckItem } = props;
@@ -9,7 +10,9 @@ const UserDeck = props => {
       {/* <Card.Content description={"deck number " + props.deckItem.id} /> */}
       <Card.Content extra>
         {/* <Button.Group> */}
-        <Button floated="left">Review</Button>
+        <Link to="/play">
+          <Button floated="left">Review</Button>
+        </Link>
         <Button floated="right">Edit</Button>
         {/* </Button.Group> */}
       </Card.Content>
