@@ -56,6 +56,9 @@ class App extends Component {
     .catch(err => console.log(`err: ${err}`));
   }
 
+  // To get access to the token for requests:
+  // import TokenService from "../TokenService";
+  // const token = TokenService.read();
 
   render() {
     return (
@@ -72,7 +75,7 @@ class App extends Component {
               <Route exact path="/play/tailored" component={GameTailored} />
               <Route exact path="/decks/new" component={CreateDeck} />
               <Route exact path="/register" component={(props) => (
-                  <Register {...props} submit={this.register.bind(this)} />
+                  <Register {...props} submit={this.register} />
               )} />
               <Route exact path="/login" component={(props) => (
                   <Login {...props} submit={this.login} />
