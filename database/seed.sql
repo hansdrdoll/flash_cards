@@ -2,19 +2,19 @@
 
 -- USERS --
 INSERT INTO users
-  (id, username, password_digest)
+  (username, password_digest)
 VALUES
-  ( 1, 'Jack', 'pass');
+  ('Jack', 'pass');
 
 INSERT INTO users
-  (id, username,  password_digest)
+  (username,  password_digest)
 VALUES
-  ( 2, 'Jill', 'word');
+  ('Jill', 'word');
 
 INSERT INTO users
-  (id, username,  password_digest)
+  (username,  password_digest)
 VALUES
-  ( 3, 'Meh', 'pw');
+  ('Meh', 'pw');
 
   --------------------------------------------------------------------------------
 
