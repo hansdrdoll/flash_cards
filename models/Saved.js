@@ -5,15 +5,15 @@ const db = require("../database/db-connection");
 const Saved = () => {};
 
 // Create a function that saves that saves a deck of cards
-Saved.create = id => {
+Saved.create = (username, deckId) => {
+  console.log("saved model", username, deckId)
+  return db.one(`SELECT id FROM users WHERE username = $1`, username)
+    .then(user_id => {
   // Insert the decks.id and users.id of the saved deck into a JOIN table of saved decks
-  return db.one(
+  return db.none(
     `INSERT INTO saved_decks
      (deck_id, user_id)
-     SELECT cards.question, cards.answer
-     FROM cards
-     JOIN user ON cards.user_id = users.id
-     JOIN decks ON cards.deck_id = decks.id`
+     VALUES ($1, $2)`, [deckId, user_id]
   );
 };
 

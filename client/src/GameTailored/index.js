@@ -18,11 +18,6 @@ class GameTailored extends Component {
     this.shuffleCards = this.shuffleCards.bind(this);
   }
 
-  coomponentDidMount() {
-    const token = {token: TokenService.read()}
-    fetchCardsInDeck(token).then(data => console.log(data))
-  }
-
   componentDidMount() {
     fetchCardsInDeck(this.props.match.params.slug)
       .then(cards => {

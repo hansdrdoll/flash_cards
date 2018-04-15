@@ -16,6 +16,7 @@ class GameNormal extends Component {
     this.resetCards = this.resetCards.bind(this);
     this.shuffleCards = this.shuffleCards.bind(this);
   }
+  
   coomponentDidMount() {
     const token = {token: TokenService.read()}
     fetchCardsInDeck(this.props.match.params.slug)
