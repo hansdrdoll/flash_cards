@@ -81,14 +81,14 @@ app.get("/api/decks/:user_id", urlencodedParser, (request, response) => {
 });
 
 // Create a new a route to post a new deck to the database
-app.post("/api/deck/new", jsonParser, (request, response) => {
+app.post("/api/deck/new", urlencodedParser, (request, response) => {
   // Extract the data from the url
   const { title, slug, user_id, public } = request.body;
   const data = {
     title: title,
     slug: slug,
-    user_id: user_id,
-    public: public
+    user_id: Number(user_id),
+    public: true
   };
   console.log(data);
   // Insert the user input a new row into the database with the corresponding input
@@ -101,7 +101,13 @@ app.post("/api/deck/new", jsonParser, (request, response) => {
 // Create a route to Edit and existing deck
 app.put("/api/deck/:deck_id/edit", urlencodedParser, (response, request) => {
   // Extract the data from the URL
-  const data = request.body;
+  const { title, slug, user_id, public } = request.body;
+  const data = {
+    title: title,
+    slug: slug,
+    user_id: user_id,
+    public: public
+  };
   // Update the row that corresponding to the id extracting
   Decks.update(data).then(data => {
     // Once the Update is complete, return a json object
@@ -112,7 +118,7 @@ app.put("/api/deck/:deck_id/edit", urlencodedParser, (response, request) => {
 // Create a route that deletes and existing decks
 app.post("/api/deck/:deck_id", (request, response) => {
   // Extract the id from the URL
-  const id = Number(request.params.id);
+  const id = parseInt(request.params.id);
   // Delete the row with corresponding id
   Decks.delete(id).then(data => {
     response.json(data);
@@ -124,7 +130,7 @@ app.post("/api/deck/:deck_id", (request, response) => {
 // Create a route insert a new card into the database
 app.post("/api/deck/:deck_id/card/new", (request, response) => {
   // Extract the id from the url
-  const id = request.params.id;
+  const id = parseInt(request.params.id);
   console.log(id);
   // Extract the data from the URL
   const data = request.body;
@@ -151,7 +157,7 @@ app.put("/api/deck/:deck_id/card/edit", (request, response) => {
 
 // Create a route to get all the cards in the database
 app.get("/api/deck/:deck_id/cards", urlencodedParser, (request, response) => {
-  const deck_id = request.params.deck_id;
+  const deck_id = parseInt(request.params.deck_id);
   console.log(deck_id);
   // Extract the data from the URL
   const data = request.body;
@@ -167,7 +173,7 @@ app.get("/api/deck/:deck_id/cards", urlencodedParser, (request, response) => {
 // Create a route to POST to save a deck to a user
 app.post("/api/saved/:deck_id/new", (request, response) => {
   // Extract the id from the URL
-  const id = Number(request.params.deck_id);
+  const id = parseInt(request.params.deck_id);
   // Send a request to the database to place the corresponding deck ID in the saved_decks join table
   Saved.create(id).then(data => {
     response.json(data);
@@ -176,7 +182,7 @@ app.post("/api/saved/:deck_id/new", (request, response) => {
 
 // Create a route to get all the user saved decks
 app.get("/api/saved/:user_id", (request, response) => {
-  const user_id = request.params.user_id;
+  const user_id = parseInt(request.params.user_id);
   console.log(user_id);
   // Extract the data from the URL
   const data = request.body;
