@@ -21,6 +21,14 @@ const Progression = require("./models/Progression");
 // Specify express as the engine
 const app = EXPRESS();
 
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+app.use(cors());
+
 // Create a POST route to the api for creating a new user
 app.post("/api/user/new", jsonParser, (request, response) => {
   // Extract the data from the body
@@ -29,7 +37,7 @@ app.post("/api/user/new", jsonParser, (request, response) => {
     username: username,
     password_digest: password_digest
   };
-
+  console.log(data);
   // Insert the user inputs into the database in a new row in the corresponding fields
   Users.create(data).then(data => {
     // Once the POST is made return then json response
@@ -81,19 +89,35 @@ app.get("/api/decks/:user_id", urlencodedParser, (request, response) => {
 });
 
 // Create a new a route to post a new deck to the database
-app.post("/api/deck/new", urlencodedParser, (request, response) => {
+app.post("/api/deck/new", jsonParser, (request, response) => {
   // Extract the data from the url
   const { title, slug, user_id, public } = request.body;
   const data = {
     title: title,
     slug: slug,
     user_id: Number(user_id),
-    public: true
+    public: public
   };
   console.log(data);
   // Insert the user input a new row into the database with the corresponding input
   Decks.create(data).then(data => {
     // Once the POST is made return then json response
+    response.json({ message: "ok" });
+  });
+});
+
+// Create a route insert a new card into the database
+app.post("/api/deck/:deck_id/card/new", jsonParser, (request, response) => {
+  // Extract the id from the url
+  const deck_id = parseInt(request.params.deck_id);
+  // Extract the data from the URL
+  const { question, answer } = request.body;
+  const newCard = {
+    question: question,
+    answer: answer
+  };
+  // Insert a new row with the User input into the cards table
+  Cards.create(newCard, deck_id).then(newCard => {
     response.json({ message: "ok" });
   });
 });
@@ -126,19 +150,6 @@ app.post("/api/deck/:deck_id", (request, response) => {
 });
 
 //--- **CARDS** ---//
-
-// Create a route insert a new card into the database
-app.post("/api/deck/:deck_id/card/new", (request, response) => {
-  // Extract the id from the url
-  const id = parseInt(request.params.id);
-  console.log(id);
-  // Extract the data from the URL
-  const data = request.body;
-  // Insert a new row with the User input into the cards table
-  Cards.create(data).then(data => {
-    response.json(data);
-  });
-});
 
 // Create a route to edit an existing card
 app.put("/api/deck/:deck_id/card/edit", (request, response) => {

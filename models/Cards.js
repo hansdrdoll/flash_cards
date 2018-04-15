@@ -6,10 +6,10 @@ Cards.findAll = deck_id => {
   return db.any("SELECT * FROM cards WHERE deck_id = $1", [deck_id]);
 };
 
-Cards.create = newCard => {
+Cards.create = (newCard, deck_id) => {
   return db.one(
     "INSERT INTO cards (question, answer, deck_id) VALUES ($1, $2, $3) RETURNING id",
-    [newCard.question, newCard.answer, newCard.deck_id]
+    [newCard.question, newCard.answer, deck_id]
   );
 };
 
