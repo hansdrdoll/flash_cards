@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import React, { Component } from "react";
 import { Input, Button, Form } from "semantic-ui-react";
 import InputItem from "./input-item";
 import "./style.css";
+=======
+import React, { Component } from 'react';
+import { Input, Button, Form } from 'semantic-ui-react';
+import InputItem from './input-item';
+import './style.css';
+>>>>>>> 7ef8d06102cea0ade08f0bc303e9f1c9137811bd
 
 class CreateDeck extends Component {
   constructor(props) {

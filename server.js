@@ -1,15 +1,14 @@
 // Declare the necessary dependancies
-const EXPRESS = require("express");
-const bodyParser = require("body-parser");
+const express = require("express");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-const jsonParser = bodyParser.json();
 const db = require("./database/db-connection");
+const jsonParser = bodyParser.json();
+// Specify express as the engine
+const app = express();
 
-// Require bcrypt
-const bcrypt = require("bcryptjs");
-// Stores a fixed salt key generated in the node repl
-const salt = "$2a$10$iEe24ElSjus.JhY49OhY5u";
+app.use(cors());
 
 // Import the necessary models from the models directory
 const Users = require("./models/Users");
@@ -17,9 +16,8 @@ const Decks = require("./models/Decks");
 const Cards = require("./models/Cards");
 const Saved = require("./models/Saved");
 const Progression = require("./models/Progression");
+const tokenService = require("./services/TokenService");
 
-// Specify express as the engine
-const app = EXPRESS();
 
 app.use(bodyParser.json());
 app.use(
@@ -31,6 +29,7 @@ app.use(cors());
 
 // Create a POST route to the api for creating a new user
 app.post("/api/user/new", jsonParser, (request, response) => {
+<<<<<<< HEAD
   // Extract the data from the body
   const { username, password_digest } = request.body;
   const data = {
@@ -38,11 +37,35 @@ app.post("/api/user/new", jsonParser, (request, response) => {
     password_digest: password_digest
   };
   console.log(data);
+=======
+>>>>>>> 7ef8d06102cea0ade08f0bc303e9f1c9137811bd
   // Insert the user inputs into the database in a new row in the corresponding fields
-  Users.create(data).then(data => {
-    // Once the POST is made return then json response
-    response.json({ message: "ok" });
-  });
+  console.log("server", request.body)
+  Users.create(request.body)
+    .then(data => tokenService.makeToken({
+      username: data
+    }))
+    .then(token => {
+      response.json({
+        token: token
+      })
+    })
+});
+
+// thanks ryan
+app.post('/login', jsonParser, (request, response) => {
+  console.log(request.body);
+  Users.login(request.body)
+    .then(data => tokenService.makeToken({
+      username: data
+    }))
+    .then(token => {
+      response.json({
+        token: token
+      })
+    })
+    // throw error if user is not found
+    .catch(err => console.log(`throwing an error: ${err}`));
 });
 
 // Create a get route to the api for all user information
