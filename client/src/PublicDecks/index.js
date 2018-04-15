@@ -5,39 +5,47 @@ class PublicDecks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      publicData: [
-        {
-          id: 4,
-          title: "Callback Functions!"
-        },
-        {
-          id: 5,
-          title: "Making routes in express!"
-        },
-        {
-          id: 6,
-          title: "Components in React!"
-        },
-        {
-          id: 7,
-          title: "The Dawn of DOM Manipulation"
-        },
-        {
-          id: 8,
-          title: "Flexbox Flashbacks!"
-        }
-      ]
+      apiDataLoaded: false,
+      publicDeckData: []
     };
+    this.fetchPublicDecks = this.fetchPublicDecks.bind(this);
   }
+
+  componentDidMount() {
+    this.fetchPublicDecks();
+  }
+
+  fetchPublicDecks() {
+    fetch(`http://localhost:4567/api/decks`)
+      .then(response => response.json())
+      .then(publicDecksApiResponse => {
+        console.log(publicDecksApiResponse);
+        this.setState({
+          apiDataLoaded: true,
+          publicDeckData: publicDecksApiResponse
+        });
+      });
+  }
+
   render() {
-    const publicDList = this.state.publicData.map(item => {
+    const { publicDeckData } = this.state;
+    console.log(publicDeckData);
+    if (publicDeckData.length === 0) {
+      return (
+        <div>
+          <p>Loading~</p>
+        </div>
+      );
+    }
+    const publicDeckList = publicDeckData.map(pDeck => {
       return (
         <p>
-          <PublicDeck publicItem={item} key={item.id} />
+          {/* passing the data from public decks into the PublicDeck child as I map through each index of the array of objects. */}
+          <PublicDeck pubDeckData={pDeck} key={pDeck.id} />
         </p>
       );
     });
-    return <div className="public-decks">{publicDList}</div>;
+    return <div className="public-decks">{publicDeckList}</div>;
   }
 }
 

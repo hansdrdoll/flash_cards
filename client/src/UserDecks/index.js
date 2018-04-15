@@ -1,39 +1,34 @@
 import React, { Component } from "react";
 import UserDeck from "../UserDeck";
+import { fetchUserDecks } from "../api";
+import TokenService from "../TokenService";
+
+const token = TokenService.read();
 
 class UserDecks extends Component {
   constructor(props) {
     super(props);
     this.state = {
       apiDataLoaded: false,
-      user_id: 1,
-      deckBySlug: {}
+      userDeckData: {}
     };
-    this.fetchUserDecks = this.fetchUserDecks.bind(this);
   }
 
   componentDidMount() {
-    this.fetchUserDecks();
+    fetchUserDecks().then(userDeckApiResponse => {
+      console.log(userDeckApiResponse);
+      this.setState({
+        apiDataLoaded: true,
+        userDeckData: userDeckApiResponse
+      });
+    });
   }
 
   // Fetch all the decks from the api that's associated with the User's ID
-  fetchUserDecks() {
-    fetch(`http://localhost:4567/api/decks/`)
-      .then(response => response.json())
-      .then(decksApiResponse => {
-        this.setState({
-          apiDataLoaded: true,
-          deckBySlug: decksApiResponse
-        });
-      });
-  }
-
   render() {
-    const { deckBySlug } = this.state;
+    const { userDeckData } = this.state;
     // Get the values from the object in this.state.deckBySlug
-    const decks = Object.values(deckBySlug);
-    console.log(deckBySlug);
-    console.log(decks);
+    const decks = Object.values(userDeckData);
     if (decks.length === 0) {
       return (
         <div>
@@ -42,7 +37,7 @@ class UserDecks extends Component {
       );
     }
     // Loop through the data from the api, and pass them on to the UserDeck component.
-    const userDList = deckBySlug.map(deck => {
+    const userDList = userDeckData.map(deck => {
       return (
         <div className="deck-container">
           <UserDeck deckData={deck} key={deck.id} />

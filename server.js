@@ -250,11 +250,10 @@ app.post("/api/saved/:deck_id/new", jsonParser, (request, response) => {
   const deckId = Number(request.params.deck_id);
   const { token } = request.body;
   // Send a request to the database to place the corresponding deck ID in the saved_decks join table
-  TokenService.verify(token)
-    .then(token => {
-      Saved.create(token.username, deckId);
-      response.status(200);
-    });
+  TokenService.verify(token).then(token => {
+    Saved.create(token.username, deckId);
+    response.status(200);
+  });
 });
 
 // Create a route to get all the user saved decks
@@ -284,21 +283,19 @@ app.post("/api/saved", urlencodedParser, (request, response) => {
 });
 
 app.post("/api/progresion/:card_id", jsonParser, (request, response) => {
-  const { token } = request.body
+  const { token } = request.body;
   const cardId = request.params.card_id;
-  TokenService.verify(token)
-    .then(data => {
-      Progression.create()
-})
+  TokenService.verify(token).then(data => {
+    Progression.create();
+  });
 });
 
 app.post("/api/progresion/:card_id", jsonParser, (request, response) => {
-  const { token } = request.body
+  const { token } = request.body;
   const cardId = request.params.card_id;
-  TokenService.verify(token)
-    .then(data => {
-      Progression.create()
-})
+  TokenService.verify(token).then(data => {
+    Progression.create();
+  });
 });
 
 // Set the listening port for the server and log a confimatory message

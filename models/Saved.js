@@ -6,16 +6,18 @@ const Saved = () => {};
 
 // Create a function that saves that saves a deck of cards
 Saved.create = (username, deckId) => {
-  console.log("saved model", username, deckId)
-  return db.one(`SELECT id FROM users WHERE username = $1`, username)
+  console.log("saved model", username, deckId);
+  return db
+    .one("SELECT id FROM users WHERE username = $1", username)
     .then(user_id => {
-  // Insert the decks.id and users.id of the saved deck into a JOIN table of saved decks
-  return db.none(
-    `INSERT INTO saved_decks
+      // Insert the decks.id and users.id of the saved deck into a JOIN table of saved decks
+      return db.none(
+        `INSERT INTO saved_decks
      (deck_id, user_id)
-     VALUES ($1, $2)`, [deckId, user_id]
-  );
-})
+     VALUES ($1, $2)`,
+        [deck_id, user_id]
+      );
+    });
 };
 
 // Create a function that returns all a users saved decks
