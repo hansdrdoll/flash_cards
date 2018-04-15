@@ -8,10 +8,10 @@ class GameNormal extends Component {
     super(props);
     this.state = {
       currentCard: 0,
-      cards: []
+      cards: [],
+      isHidden: true
     };
-    // this.addToTailored = this.addToTailored.bind(this);
-    // this.deleteFromTailored = this.deleteFromTailored.bind(this);
+
     this.nextCard = this.nextCard.bind(this);
     this.resetCards = this.resetCards.bind(this);
     this.shuffleCards = this.shuffleCards.bind(this);
@@ -27,6 +27,11 @@ class GameNormal extends Component {
         cards: cards
       })
     })
+  }
+  handleClick() {
+    this.setState({
+      isHidden: false
+    });
   }
 
 
@@ -66,7 +71,12 @@ class GameNormal extends Component {
           <div>
             <div className="display-card">
               <h1>{this.state.cards[this.state.currentCard].question} </h1>
+            <div className="hidden">
               <p>{this.state.cards[this.state.currentCard].answer}</p>
+            </div>
+            <button className="revealAnswer" onClick={this.handleClick.bind(this)}>
+            Reveal
+            </button>
             </div>
             <footer className="good-or-nah">
               <button onClick={this.nextCard} className="good">
