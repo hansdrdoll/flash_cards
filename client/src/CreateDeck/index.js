@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Input, Button, Form } from "semantic-ui-react";
-import { fetchUserDecks } from "./api";
+import { fetchUserDecks } from "../api";
+import TokenService from "../TokenService";
 import InputItem from "./input-item";
 import "./style.css";
 

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import TokenService from "../TokenService";
+import { fetchCardsInDeck, fetchUserDecks } from "../api";
 import GameNormal from "../GameNormal";
 import GameTailored from "../GameTailored";
 
@@ -20,8 +22,8 @@ class GamePlay extends Component {
           answer: "11... Trust me on this, it's 11."
         }
       ],
-      hidden: true
-      // slug: slug
+      hidden: true,
+      slug: this.props
     };
     // this.fetchCards = this.fetchCards.bind(this);
     this.nextCard = this.nextCard.bind(this);
@@ -29,11 +31,9 @@ class GamePlay extends Component {
   }
   componentDidMount() {
     const { slug } = this.props.match.params;
-    // fetchCards(slug).then(cards => {
-    //   this.setState({
-    //     cards: cards
-    //   });
-    // });
+    fetchCardsInDeck(this.props.match.params.slug).then(data => {
+      cardData: data;
+    });
   }
 
   nextCard(evt) {
