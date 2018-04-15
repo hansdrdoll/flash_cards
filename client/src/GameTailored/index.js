@@ -1,23 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import TokenService from "../TokenService";
+import { fetchCardsInDeck, fetchUserDecks } from "../api"
 
 class GameTailored extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentCard: 0,
-      cards: [
-        {
-          id: 4,
-          question: "Do you swim?",
-          answer: "You do now!"
-        },
-        {
-          id: 5,
-          question: "How do we relax?",
-          answer: "with JavaScript."
-        }
-      ]
+
     };
     // this.addToTailored = this.addToTailored.bind(this);
     // this.deleteFromTailored = this.deleteFromTailored.bind(this);
@@ -25,14 +16,11 @@ class GameTailored extends Component {
     this.resetCards = this.resetCards.bind(this);
     this.shuffleCards = this.shuffleCards.bind(this);
   }
-  //
-  // addToTailored(evt) {
-  //   fetch(`http://localhost:4567/api/`)
-  // }
-  //
-  // deleteFromTailored(evt) {
-  //   fetch(`http://localhost:4567/api/`)
-  // }
+
+  coomponentDidMount() {
+    const token = {token: TokenService.read()}
+    fetchCardsInDeck(token).then(data => console.log(data))
+  }
 
   shuffleCards(evt) {
     const cardsArray = this.state.cards;

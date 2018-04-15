@@ -2,13 +2,21 @@ const db = require("../database/db-connection");
 
 const Decks = {};
 
+Decks.getAll = () => {
+  return db.any("SELECT * FROM Decks");
+};
+
 Decks.getOne = slug => {
   return db.one("SELECT * FROM decks WHERE slug = $1", [slug]);
 };
 
 Decks.getUserDecks = username => {
-  return db.any(`
-    SELECT decks.id, decks.title, decks.slug, decks.public FROM decks JOIN users ON decks.user_id = users.id WHERE users.username = $1`, [username]);
+  // uses a join table to get all decks that match a username
+  return db.any(
+    `
+    SELECT decks.id, decks.title, decks.slug, decks.public FROM decks JOIN users ON decks.user_id = users.id WHERE users.username = $1`,
+    [username]
+  );
 };
 
 Decks.getPublicDecks = data => {
@@ -19,15 +27,16 @@ Decks.getPublicDecks = data => {
 };
 
 Decks.create = (title, slug, username) => {
-  // get the user_id from the username
+  // turn the username into the user_id
   return db.one(`SELECT id FROM users WHERE username = $1`, username)
     .then(user_id => {
+      // then create the new deck info with the user id
       return db.one(
         `INSERT INTO decks (title, slug, user_id)
         VALUES ($1, $2, $3) RETURNING id`,
         [title, slug, user_id.id]
-      )
-    })
+      );
+    });
 };
 
 Decks.update = deckData => {

@@ -5,29 +5,48 @@ class UserDecks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-        {
-          id: 1,
-          title: "vanilla JS"
-        },
-        {
-          id: 2,
-          title: "how to be chill"
-        },
-        {
-          id: 3,
-          title: "tips for getting drunk on friday after class at GA."
-        }
-      ]
+      apiDataLoaded: false,
+      user_id: 1,
+      deckBySlug: {}
     };
+    this.fetchUserDecks = this.fetchUserDecks.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchUserDecks();
+  }
+
+  // Fetch all the decks from the api that's associated with the User's ID
+  fetchUserDecks() {
+    fetch(`http://localhost:4567/api/decks/`)
+      .then(response => response.json())
+      .then(decksApiResponse => {
+        this.setState({
+          apiDataLoaded: true,
+          deckBySlug: decksApiResponse
+        });
+      });
   }
 
   render() {
-    const userDList = this.state.data.map(item => {
+    const { deckBySlug } = this.state;
+    // Get the values from the object in this.state.deckBySlug
+    const decks = Object.values(deckBySlug);
+    console.log(deckBySlug);
+    console.log(decks);
+    if (decks.length === 0) {
       return (
-        <p>
-          <UserDeck deckItem={item} key={item.title} />
-        </p>
+        <div>
+          <p>Loading~</p>
+        </div>
+      );
+    }
+    // Loop through the data from the api, and pass them on to the UserDeck component.
+    const userDList = deckBySlug.map(deck => {
+      return (
+        <div className="deck-container">
+          <UserDeck deckData={deck} key={deck.id} />
+        </div>
       );
     });
     return <div className="user-decks">{userDList}</div>;

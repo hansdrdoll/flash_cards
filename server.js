@@ -39,8 +39,8 @@ app.post("/api/user/new", jsonParser, (request, response) => {
   console.log("server", request.body);
   Users.create(request.body)
     .then(data =>
-      tokenService.makeToken({
-        username: data
+      TokenService.makeToken({
+        username: data.username
       })
     )
     .then(token => {
@@ -81,7 +81,6 @@ app.post("/api/user/check-token", jsonParser, (request, response) => {
   // Extract the data from the body
   const { token } = request.body;
   // Get all the users and return a json object
-
   TokenService.verify(token).then(data => {
     response.json(data.username);
   });
@@ -110,6 +109,12 @@ app.get("/api/user/:id", urlencodedParser, (request, response) => {
   });
 });
 
+app.get("/api/decks", (request, response) => {
+  Decks.getAll().then(data => {
+    response.json(data);
+  });
+});
+
 // Returns all decks associated with user when given token
 
 app.post("/api/decks/user-decks", jsonParser, (request, response) => {
@@ -125,7 +130,7 @@ app.post("/api/decks/user-decks", jsonParser, (request, response) => {
 app.post("/api/decks/new", jsonParser, (request, response) => {
   const { title, token } = request.body;
   // slugify the deck title
-  const slug = slugify(title);
+  const slug = slugify(title, { lower: true });
   // verify the token into a username
   TokenService.verify(token).then(data => {
     Decks.create(title, slug, data.username).then(data => {
@@ -151,24 +156,22 @@ app.post("/api/deck/:slug/card/new", jsonParser, (request, response) => {
 });
 
 // Create a route to Edit and existing deck
-app.put("/api/deck/:deck_id/edit", urlencodedParser, (response, request) => {
+app.put("/api/decks/:deck_id/edit", jsonParser, (request, response) => {
   // Extract the data from the URL
-  const { title, slug, user_id, public } = request.body;
-  const data = {
-    title: title,
-    slug: slug,
-    user_id: user_id,
-    public: public
-  };
+
+  console.log("u got the server");
+  const data = request.body;
+  const deckId = request.params.deck_id;
+
   // Update the row that corresponding to the id extracting
-  Decks.update(data).then(data => {
+  Cards.update(data, deckId).then(data => {
     // Once the Update is complete, return a json object
     response.json(data);
   });
 });
 
 // Create a route that deletes and existing decks
-app.post("/api/deck/:deck_id", (request, response) => {
+app.delete("/api/deck/:deck_id", (request, response) => {
   // Extract the id from the URL
   const id = parseInt(request.params.id);
   // Delete the row with corresponding id
@@ -177,7 +180,7 @@ app.post("/api/deck/:deck_id", (request, response) => {
   });
 });
 
-//--- **CARDS** ---//
+// --- **CARDS** ---//
 
 app.post("/api/deck/:deck_id/card/create", jsonParser, (request, response) => {
   const deck_id = request.params.deck_id;
@@ -199,7 +202,7 @@ app.post("/api/deck/:deck_id/card/new", (request, response) => {
 });
 
 // Create a route to edit an existing card
-app.put("/api/deck/:deck_id/card/edit", (request, response) => {
+app.put("/api/deck/:deck_id/card/edit", jsonParser, (request, response) => {
   // Extract the data from the URL
   const { question, answer } = request.body;
   const data = {
@@ -210,7 +213,7 @@ app.put("/api/deck/:deck_id/card/edit", (request, response) => {
   Cards.update(data)
     .then(data => {
       // Return a json object
-      response.json(data);
+      response.status(204);
     })
     .catch(err => {
       response.json({ message: error });
@@ -227,7 +230,7 @@ app.get("/api/decks/:slug", urlencodedParser, (request, response) => {
   });
 });
 
-//--- **Saved_Decks** ---//
+// --- **Saved_Decks** ---//
 
 // Create a route to POST to save a deck to a user
 app.post("/api/saved/:deck_id/new", (request, response) => {
@@ -252,14 +255,18 @@ app.get("/api/saved/:user_id", (request, response) => {
   });
 });
 
-app.get("/api/saved", urlencodedParser, (request, response) => {
-  const data = request.body;
-  // Get all the saved deck associated with the user's ID
-  Saved.savedDecks(user_id).then(data => {
+// TODO: check if this should be jsonParser
+app.post("/api/saved", urlencodedParser, (request, response) => {
+  const { token } = request.body;
+  TokenService.verify(token).then(data => {
+    Saved.savedDecksByToken(data.username).then(data => {
+      response.json(data);
+    });
+    // Get all the saved deck associated with the user's ID
     // Then return a json object
     response.json(data);
   });
 });
 
 // Set the listening port for the server and log a confimatory message
-app.listen(4567, () => console.log(`Port 4567 is up!`));
+app.listen(4567, () => console.log("Port 4567 is up!"));

@@ -1,41 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import TokenService from "../TokenService"
+import {fetchUserDecks, fetchCardsInDeck} from "../api"
 
 class GameNormal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentCard: 0,
-      cards: [
-        {
-          id: 1,
-          question:
-            "What function can be used to do something after a specific amount of time?",
-          answer: "setTimeOut()"
-        },
-        {
-          id: 2,
-          question: "How do you grab an HTML element using Vanilla JavaScript?",
-          answer:
-            "You can use: 1) document.body.getElementsByTagName(className) 2) document.querySelectorAll(className)"
-        },
-        {
-          id: 3,
-          question:
-            "How do you put an element into an HTML tag using JavaScript?",
-          answer: "htmlTagName.appendChild('elementName')"
-        },
-        {
-          id: 4,
-          question: "Do you swim?",
-          answer: "You do now!"
-        },
-        {
-          id: 5,
-          question: "How do we relax?",
-          answer: "with JavaScript."
-        }
-      ]
+      cards: [],
     };
     // this.addToTailored = this.addToTailored.bind(this);
     // this.deleteFromTailored = this.deleteFromTailored.bind(this);
@@ -43,14 +16,18 @@ class GameNormal extends Component {
     this.resetCards = this.resetCards.bind(this);
     this.shuffleCards = this.shuffleCards.bind(this);
   }
-  //
-  // addToTailored(evt) {
-  //   fetch(`http://localhost:4567/api/`)
-  // }
-  //
-  // deleteFromTailored(evt) {
-  //   fetch(`http://localhost:4567/api/`)
-  // }
+  componentDidMount() {
+    const token = { token: TokenService.read() };
+    const {slug} = this.props.match.params;
+    fetchUserDecks(this.props.match.params.slug).then(data => console.log(data));
+
+    fetchCardsInDeck(slug).then(cardData => {
+      this.setState({
+        cards: cardData,
+      })
+      console.log(cardData)
+    });
+  }
 
   shuffleCards(evt) {
     const cardsArray = this.state.cards;
@@ -73,7 +50,7 @@ class GameNormal extends Component {
     });
   }
   resetCards(evt) {
-    // resets the value of currentCard
+    // resets the value of currentCard, regardless of length
     this.setState((previousState, props) => {
       return {
         currentCard: previousState.currentCard - previousState.cards.length
@@ -106,7 +83,9 @@ class GameNormal extends Component {
         ) : (
           <div>
             <h1>Would you like to start over?</h1>
-            <Link to="/play">
+            {/* Takes us back to the inital gameplay screen, where users
+              can choose to play a normal or tailored game.*/}
+            <Link to="../play">
               <button className="end-of-game" onClick={this.resetCards}>
                 <span role="img" aria-label="pray">
                   🙏
@@ -117,6 +96,7 @@ class GameNormal extends Component {
                 </span>
               </button>
             </Link>
+            {/* Takes us back to the dashboard*/}
             <Link to="/">
               <button className="end-of-game">
                 <span role="img" aria-label="shaka">

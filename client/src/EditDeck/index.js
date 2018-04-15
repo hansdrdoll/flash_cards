@@ -5,9 +5,10 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
-import InputItem from "../CreateDeck/input-item";
+import { Input, Button, Form } from "semantic-ui-react";
+import InputItem from "./input-item";
 import TokenService from "../TokenService";
-import { fetchCardsInDeck, fetchUserDecks } from "../api";
+import { fetchCardsInDeck, fetchUserDecks, updateDeckCards } from "../api";
 import "../CreateDeck/style.css";
 
 class EditDeck extends Component {
@@ -15,38 +16,31 @@ class EditDeck extends Component {
     super(props);
     this.state = {
       newTitle: "",
-      cardInputs: [
-        { front: "", back: "" },
-        { front: "", back: "" },
-        { front: "", back: "" },
-        { front: "", back: "" },
-        { front: "", back: "" }
-      ],
       cardData: []
     };
-    this.renderCards = this.renderCards.bind(this);
     this.addEmptyCard = this.addEmptyCard.bind(this);
     this.handleFrontInput = this.handleFrontInput.bind(this);
     this.handleBackInput = this.handleBackInput.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.fetchDeckData = this.fetchDeckData.bind(this);
   }
 
   componentDidMount() {
-    fetchCardsInDeck(this.props.match.params.slug).then(data => {
+
+
 
     const token = { token: TokenService.read() };
     fetchUserDecks(token)
-      .then(data => console.log(data));
+    .then(data => console.log(data));
+
     fetchCardsInDeck(this.props.match.params.slug)
     .then(data => {
-
       this.setState({
         cardData: data
-      });
-    });
-  }
+      })
+    })
+
+}
 
   renderCards() {
     const cards = [];
@@ -61,6 +55,7 @@ class EditDeck extends Component {
       );
     }
     return cards;
+
   }
 
   addEmptyCard() {
@@ -70,21 +65,19 @@ class EditDeck extends Component {
     });
   }
 
-  handleFrontInput(evt) {
-    const index = evt.target.attributes.index.value;
+  handleFrontInput(index, cardId, evt) {
     const value = evt.target.value;
-    const tempState = this.state.cardInputs;
-    tempState[index].front = value;
+    const tempState = this.state.cardData;
+    tempState[index].question = value;
     this.setState({
       cardInputs: tempState
     });
   }
 
-  handleBackInput(evt) {
-    const index = evt.target.attributes.index.value;
+  handleBackInput(index, cardId, evt) {
     const value = evt.target.value;
-    const tempState = this.state.cardInputs;
-    tempState[index].back = value;
+    const tempState = this.state.cardData;
+    tempState[index].answer = value;
     this.setState({
       cardInputs: tempState
     });
@@ -96,28 +89,41 @@ class EditDeck extends Component {
     });
   }
 
+// TODO: make this work
   handleSubmit(evt) {
     evt.preventDefault();
     console.log("Submitted");
+    const deckId = Number(this.state.cardData[0].deck_id);
+    updateDeckCards(this.state.cardData, deckId);
   }
 
   render() {
     return (
       <div className="create-deck">
         <h2>Edit Deck</h2>
-        <form onSubmit={this.handleSubmit}>
-          <input
+        <Form onSubmit={this.handleSubmit}>
+          <Input
             type="text"
             placeholder="Deck Title"
             value={this.state.newTitle}
             onChange={this.handleTitleChange}
           />
-          {this.renderCards()}
-          <button type="button" onClick={this.addEmptyCard}>
+          {this.state.cardData && this.state.cardData.map((card, i) => {
+            return (<InputItem
+                key={card.card_id}
+                arrIndex={i}
+                cardId={card.card_id}
+                frontValue={card.question}
+                backValue={card.answer}
+                handleFrontInput={this.handleFrontInput}
+                handleBackInput={this.handleBackInput}
+              /> )
+          })}
+          <Button type="button" onClick={this.addEmptyCard}>
             Add Card
-          </button>
-          <button type="submit">Submit</button>
-        </form>
+          </Button>
+          <Button type="submit">Submit</Button>
+        </Form>
       </div>
     );
   }

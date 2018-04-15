@@ -9,21 +9,10 @@ class GamePlay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentCard: 0,
-      cards: [
-        {
-          id: 2,
-          questions: "Who are the members of team AWESOME Sauce?",
-          anwser: "Haalby"
-        },
-        {
-          id: 3,
-          question: "What's the meaning of Life?",
-          answer: "11... Trust me on this, it's 11."
-        }
-      ],
-      hidden: true,
-      slug: this.props
+      // currentCard: 0,
+      // cards: cardData,
+      // hidden: true,
+      // slug: this.props
     };
     // this.fetchCards = this.fetchCards.bind(this);
     this.nextCard = this.nextCard.bind(this);
@@ -63,7 +52,8 @@ class GamePlay extends Component {
           Review all your cards or would you like to see see a selection
           tailored to you?
         </h1>
-        <Link to="/play/normal">
+        {/* This will allow us to play all the cards in the deck */}
+        <Link to="./play/normal">
           <button className="game-type">
             normal{" "}
             <span role="img" aria-label="smile-blush">
@@ -71,7 +61,8 @@ class GamePlay extends Component {
             </span>
           </button>
         </Link>
-        <Link to="/play/tailored">
+        {/* This takes us to show only cards from the progression deck */}
+        <Link to="./play/tailored">
           <button className="game-type">
             tailored{" "}
             <span role="img" aria-label="boom">

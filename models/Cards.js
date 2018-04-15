@@ -18,10 +18,8 @@ Cards.findByDeckSlug = slug => {
   );
 };
 
-<<<<<<< HEAD
-Cards.create = (newCard, deck_id) => {
-=======
 Cards.createMany = (arr, deck_id) => {
+  // make an insert statement for each card in the deck
   arr.map(card => {
     console.log(card);
     db.none('INSERT INTO cards (question, answer, deck_id) VALUES ($1, $2, $3)',
@@ -31,19 +29,22 @@ Cards.createMany = (arr, deck_id) => {
 }
 
 Cards.create = newCard => {
->>>>>>> a201a3ae3a5f9d41fa555af179655bd9f11c9c8d
+
   return db.one(
     "INSERT INTO cards (question, answer, deck_id) VALUES ($1, $2, $3) RETURNING id",
     [newCard.question, newCard.answer, newCard.deck_id]
   );
 };
 
-Cards.update = card => {
-  return db.none("UPDATE cards SET question = $1, answer = $2 WHERE id = $3", [
-    data.question,
-    data.answer,
-    data.id
-  ]);
+Cards.update = data => {
+  data.map(card => {
+    db.none('UPDATE cards SET question = $1, answer = $2 WHERE id = $3', [
+      card.question,
+      card.answer,
+      card.card_id
+    ])
+  })
+
 };
 
 Cards.delete = id => {
