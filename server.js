@@ -20,7 +20,7 @@ const tokenService = require("./services/TokenService");
 
 
 // Create a POST route to the api for creating a new user
-app.post("/api/user/new", urlencodedParser, (request, response) => {
+app.post("/api/user/new", jsonParser, (request, response) => {
   // Insert the user inputs into the database in a new row in the corresponding fields
   console.log("server", request.body)
   Users.create(request.body)
