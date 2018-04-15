@@ -3,6 +3,7 @@ import { Input, Button, Form } from "semantic-ui-react";
 import InputItem from "./input-item";
 import "./style.css";
 
+
 class CreateDeck extends Component {
   constructor(props) {
     super(props);
