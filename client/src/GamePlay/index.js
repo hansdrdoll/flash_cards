@@ -4,6 +4,24 @@ import GameNormal from "../GameNormal";
 import GameTailored from "../GameTailored";
 
 class GamePlay extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentCard: 0
+    };
+  }
+  componentDidMount() {}
+
+  fetchCards() {
+    fetch("/api/deck/:deck_id/cards")
+      .then(response => response.json())
+      .then(flashCardsAPIResponse => {
+        let decksBySlug = {};
+        flashCardsAPIResponse.forEach(card => {
+          decksBySlug[decks.slug] = card;
+        });
+      });
+  }
   render() {
     return (
       <div>

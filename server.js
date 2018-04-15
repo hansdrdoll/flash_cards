@@ -176,7 +176,11 @@ app.post("/api/deck/:deck_id", (request, response) => {
 // Create a route to edit an existing card
 app.put("/api/deck/:deck_id/card/edit", (request, response) => {
   // Extract the data from the URL
-  const data = request.body;
+  const { question, answer } = request.body;
+  const data = {
+    question: question,
+    answer: answer
+  };
   // Update the request of the
   Cards.update(data)
     .then(data => {
