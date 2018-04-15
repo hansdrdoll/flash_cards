@@ -35,8 +35,9 @@ app.post("/api/user/new", urlencodedParser, (request, response) => {
 });
 
 // thanks ryan
-app.post('/api/login', jsonParser, (request, response) => {
-  User.login(request.body)
+app.post('/login', jsonParser, (request, response) => {
+  console.log(request.body);
+  Users.login(request.body)
     .then(data => tokenService.makeToken({
       username: data
     }))

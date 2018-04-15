@@ -17,8 +17,7 @@ Users.create = data => {
 Users.login = user => {
   return Users.findUser(user.username)
     .then(userData => {
-      console.log(userData.username);
-      const isAuthed = bcrypt.compareSync(userData.password, userData.password_digest);
+      const isAuthed = bcrypt.compareSync(user.password, userData.password_digest);
       if (!isAuthed) throw new Error('Invalid Credentials');
       // returning the hashed password makes me feel weird
       return userData.username;
@@ -43,7 +42,7 @@ Users.deleteUser = id => {
 
 // Find a specific user
 Users.findUser = username => {
-  return db.one("SELECT * FROM users WHERE id = $1", [username]);
+  return db.one("SELECT * FROM users WHERE username = $1", [username]);
 };
 
 // Export the model functions
