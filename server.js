@@ -92,7 +92,7 @@ app.get("/api/user/:id", urlencodedParser, (request, response) => {
 });
 
 // Returns all decks associated with user when given token
-app.post("/api/decks/user-decks", urlencodedParser, (request, response) => {
+app.post("/api/decks/user-decks", jsonParser, (request, response) => {
   TokenService.verify(request.body.token)
     .then(data => {
       Decks.getUserDecks(data.username)

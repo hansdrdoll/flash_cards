@@ -7,10 +7,10 @@ import {
 } from "react-router-dom";
 import InputItem from "../CreateDeck/input-item";
 import TokenService from "../TokenService";
-import { fetchCardsInDeck } from "../api";
+import { fetchCardsInDeck, fetchUserDecks } from "../api";
 import "../CreateDeck/style.css";
 
-class CreateDeck extends Component {
+class EditDeck extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +21,8 @@ class CreateDeck extends Component {
         { front: "", back: "" },
         { front: "", back: "" },
         { front: "", back: "" }
-      ]
+      ],
+      cardData: []
     };
     this.renderCards = this.renderCards.bind(this);
     this.addEmptyCard = this.addEmptyCard.bind(this);
@@ -33,7 +34,15 @@ class CreateDeck extends Component {
   }
 
   componentDidMount() {
-    fetchCardsInDeck(this.props.match.params.slug);
+    // const token = { token: TokenService.read() };
+    // fetchUserDecks(token)
+    //   .then(data => console.log(data));
+    fetchCardsInDeck(this.props.match.params.slug)
+    .then(data => {
+      this.setState({
+        cardData: data,
+      })
+    });
   }
 
   renderCards() {
@@ -92,7 +101,7 @@ class CreateDeck extends Component {
   render() {
     return (
       <div className="create-deck">
-        <h2>Create Deck</h2>
+        <h2>Edit Deck</h2>
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
@@ -111,4 +120,4 @@ class CreateDeck extends Component {
   }
 }
 
-export default CreateDeck;
+export default EditDeck;
