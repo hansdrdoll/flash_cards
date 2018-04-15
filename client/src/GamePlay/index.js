@@ -7,22 +7,47 @@ class GamePlay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentCard: 0
+      currentCard: 0,
+      cards: "",
+      hidden: true
     };
+    this.fetchCards = this.fetchCards.bind(this);
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.fetchCard();
+  }
 
-  fetchCards() {
-    fetch("/api/deck/:deck_id/cards")
-      .then(response => response.json())
-      .then(flashCardsAPIResponse => {
-        let decksBySlug = {};
-        flashCardsAPIResponse.forEach(card => {
-          decksBySlug[decks.slug] = card;
-        });
-      });
+  fetchCard() {
+    fetch("/api/deck/:deck_id/cards").then(response => response.json());
+    this.setState((previousState, props) => {
+      cards.Object.assign(previousState.cards, cards);
+      return {
+        cards: currentCard
+      };
+    });
   }
+
+  nextCard(evt) {
+    // increases the value of currentCard by One
+    this.setState((previousState, props) => {
+      // No more cards? let's not increase the value of currentCard anymore.
+      if (this.state.currentCard <= this.state.cards.length - 1) {
+        return { currentCard: previousState.currentCard + 1 };
+      }
+    });
+  }
+
+  resetCards(evt) {
+    // resets the value of currentCard
+    this.setState((previousState, props) => {
+      return {
+        currentCard: previousState.currentCard - previousState.cards.length
+      };
+    });
+  }
+
   render() {
+    const { deck } = this.state;
     return (
       <div>
         <h1>

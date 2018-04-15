@@ -129,9 +129,9 @@ app.post("/api/deck/new", jsonParser, (request, response) => {
 });
 
 // Create a route insert a new card into the database
-app.post("/api/deck/:deck_id/card/new", jsonParser, (request, response) => {
+app.post("/api/deck/:slug/card/new", jsonParser, (request, response) => {
   // Extract the id from the url
-  const deck_id = parseInt(request.params.deck_id);
+  const slug = request.params.slug;
   // Extract the data from the URL
   const { question, answer } = request.body;
   const newCard = {
