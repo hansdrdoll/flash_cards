@@ -41,6 +41,7 @@ class App extends Component {
     })
   }
 
+  // regisers a user and places token in localStorage
   register(data) {
     return fetch(`http://localhost:4567/api/user/new`, {
       method: "POST",
@@ -57,6 +58,7 @@ class App extends Component {
     .catch(err => console.log(`err: ${err}`));
   }
 
+  // verifies credentials and places token in localStorage
   login(data) {
     return fetch(`http://localhost:4567/login`, {
       method: "POST",
