@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { fetchCardsInDeck } from "../api";
 import { Link } from "react-router-dom";
 import TokenService from "../TokenService";
 import { fetchCardsInDeck, fetchUserDecks } from "../api"
@@ -8,6 +9,7 @@ class GameTailored extends Component {
     super(props);
     this.state = {
       currentCard: 0,
+      cards: []
 
     };
     // this.addToTailored = this.addToTailored.bind(this);
@@ -20,6 +22,15 @@ class GameTailored extends Component {
   coomponentDidMount() {
     const token = {token: TokenService.read()}
     fetchCardsInDeck(token).then(data => console.log(data))
+  }
+
+  componentDidMount() {
+    fetchCardsInDeck(this.props.match.params.slug)
+      .then(cards => {
+        this.setState({
+          cards: cards,
+        })
+      })
   }
 
   shuffleCards(evt) {
