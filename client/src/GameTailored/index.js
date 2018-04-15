@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { fetchCardsInDeck } from "../api";
 import { Link } from "react-router-dom";
 import TokenService from "../TokenService";
 import { fetchCardsInDeck, fetchUserDecks } from "../api"

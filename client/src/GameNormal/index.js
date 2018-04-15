@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import TokenService from "../TokenService"
-import {fetchUserDecks, fetchCardsInDeck} from "../api"
+import TokenService from "../TokenService";
+import {fetchCardsInDeck} from "../api";
 
 class GameNormal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentCard: 0,
-      cards: [],
+      cards: []
     };
     // this.addToTailored = this.addToTailored.bind(this);
     // this.deleteFromTailored = this.deleteFromTailored.bind(this);
@@ -16,18 +16,16 @@ class GameNormal extends Component {
     this.resetCards = this.resetCards.bind(this);
     this.shuffleCards = this.shuffleCards.bind(this);
   }
-  componentDidMount() {
-    const token = { token: TokenService.read() };
-    const {slug} = this.props.match.params;
-    fetchUserDecks(this.props.match.params.slug).then(data => console.log(data));
-
-    fetchCardsInDeck(slug).then(cardData => {
+  coomponentDidMount() {
+    const token = {token: TokenService.read()}
+    fetchCardsInDeck(this.props.match.params.slug)
+    .then(cards => {
       this.setState({
-        cards: cardData,
+        cards: cards
       })
-      console.log(cardData)
-    });
+    })
   }
+
 
   shuffleCards(evt) {
     const cardsArray = this.state.cards;
