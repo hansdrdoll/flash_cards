@@ -1,16 +1,29 @@
 const db = require("../database/db-connection");
+const bcrypt = require("bcryptjs");
 
 const Users = {};
 
 // Create a new user in the database
 Users.create = data => {
+  const passwordDigest = bcrypt.hashSync(data.password, 10);
   // Add a row to database and return the id
   return db.one(
     "INSERT INTO users(username, password_digest) VALUES($1, $2) RETURNING id",
     // Reference the values in the database
-    [data.username, data.password_digest]
+    [data.username, passwordDigest]
   );
 };
+
+Users.login = user => {
+  return Users.findUser(user.username)
+    .then(userData => {
+      console.log(userData.username);
+      const isAuthed = bcrypt.compareSync(userData.password, userData.password_digest);
+      if (!isAuthed) throw new Error('Invalid Credentials');
+      // returning the hashed password makes me feel weird
+      return userData.username;
+    })
+}
 
 // Edit an existing user in the database
 Users.editUser = (id, data) => {
