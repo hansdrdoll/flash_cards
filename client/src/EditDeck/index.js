@@ -35,6 +35,13 @@ class EditDeck extends Component {
 
   componentDidMount() {
     fetchCardsInDeck(this.props.match.params.slug).then(data => {
+
+    const token = { token: TokenService.read() };
+    fetchUserDecks(token)
+      .then(data => console.log(data));
+    fetchCardsInDeck(this.props.match.params.slug)
+    .then(data => {
+
       this.setState({
         cardData: data
       });

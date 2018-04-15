@@ -4,6 +4,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const jsonParser = bodyParser.json();
+const slugify = require("slugify");
+
 // Specify express as the engine
 const app = express();
 
@@ -119,20 +121,16 @@ app.post("/api/decks/user-decks", jsonParser, (request, response) => {
 });
 
 // Create a new a route to post a new deck to the database
-app.post("/api/deck/new", jsonParser, (request, response) => {
-  // Extract the data from the url
-  const { title, slug, user_id, public } = request.body;
-  const data = {
-    title: title,
-    slug: slug,
-    user_id: Number(user_id),
-    public: public
-  };
-  console.log(data);
-  // Insert the user input a new row into the database with the corresponding input
-  Decks.create(data).then(data => {
-    // Once the POST is made return then json response
-    response.json({ message: "ok" });
+
+app.post("/api/decks/new", jsonParser, (request, response) => {
+  const { title, token } = request.body;
+  // slugify the deck title
+  const slug = slugify(title);
+  // verify the token into a username
+  TokenService.verify(token).then(data => {
+    Decks.create(title, slug, data.username).then(data => {
+      response.json(data.id);
+    });
   });
 });
 
@@ -180,6 +178,25 @@ app.post("/api/deck/:deck_id", (request, response) => {
 });
 
 //--- **CARDS** ---//
+
+app.post("/api/deck/:deck_id/card/create", jsonParser, (request, response) => {
+  const deck_id = request.params.deck_id;
+  const arr = request.body;
+  Cards.createMany(arr, deck_id);
+});
+
+// Create a route insert a new card into the database
+app.post("/api/deck/:deck_id/card/new", (request, response) => {
+  // Extract the id from the url
+  const id = request.params.id;
+  console.log(id);
+  // Extract the data from the URL
+  const data = request.body;
+  // Insert a new row with the User input into the cards table
+  Cards.create(data).then(data => {
+    response.json(data);
+  });
+});
 
 // Create a route to edit an existing card
 app.put("/api/deck/:deck_id/card/edit", (request, response) => {
