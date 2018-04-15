@@ -1,6 +1,14 @@
 import React, { Component } from "react";
-import InputItem from "./input-item";
-import "./style.css";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
+import InputItem from "../CreateDeck/input-item";
+import TokenService from "../TokenService";
+import { fetchCardsInDeck } from "../api";
+import "../CreateDeck/style.css";
 
 class CreateDeck extends Component {
   constructor(props) {
@@ -21,11 +29,12 @@ class CreateDeck extends Component {
     this.handleBackInput = this.handleBackInput.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    // this.fetchDeckData = this.fetchDeckData.bind(this);
   }
 
-  // componentDidMount() {
-  //
-  // }
+  componentDidMount() {
+    fetchCardsInDeck(this.props.match.params.slug);
+  }
 
   renderCards() {
     const cards = [];

@@ -3,7 +3,6 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-const db = require("./database/db-connection");
 const jsonParser = bodyParser.json();
 // Specify express as the engine
 const app = express();
@@ -22,7 +21,7 @@ const TokenService = require("./services/TokenService");
 // Create a POST route to the api for creating a new user
 app.post("/api/user/new", jsonParser, (request, response) => {
   // Insert the user inputs into the database in a new row in the corresponding fields
-  console.log("server", request.body)
+  console.log("server", request.body);
   Users.create(request.body)
     .then(data => TokenService.makeToken({
       username: data.username
@@ -30,12 +29,12 @@ app.post("/api/user/new", jsonParser, (request, response) => {
     .then(token => {
       response.json({
         token: token
-      })
-    })
+      });
+    });
 });
 
 // thanks ryan
-app.post('/login', jsonParser, (request, response) => {
+app.post("/login", jsonParser, (request, response) => {
   Users.login(request.body)
     .then(data => TokenService.makeToken({
       username: data
@@ -62,12 +61,11 @@ app.get("/api/user", urlencodedParser, (request, response) => {
 app.post("/api/user/check-token", jsonParser, (request, response) => {
   // Extract the data from the body
   const { token } = request.body;
-  console.log(token);
   // Get all the users and return a json object
   TokenService.verify(token)
     .then(data => {
-      response.json(data.username)
-    })
+      response.json(data.username);
+    });
 });
 
 // Create a route to Edit exiting user
@@ -167,13 +165,9 @@ app.put("/api/deck/:deck_id/card/edit", (request, response) => {
 });
 
 // Create a route to get all the cards in the database
-app.get("/api/deck/:deck_id/cards", urlencodedParser, (request, response) => {
-  const deck_id = request.params.deck_id;
-  console.log(deck_id);
-  // Extract the data from the URL
-  const data = request.body;
+app.get("/api/decks/:slug", urlencodedParser, (request, response) => {
   // Get all the cards
-  Cards.findAll(deck_id).then(data => {
+  Cards.findByDeckSlug(request.params.slug).then(data => {
     // Then return in a json object
     response.json(data);
   });
