@@ -83,7 +83,14 @@ app.get("/api/decks/:user_id", urlencodedParser, (request, response) => {
 // Create a new a route to post a new deck to the database
 app.post("/api/deck/new", jsonParser, (request, response) => {
   // Extract the data from the url
-  const data = request.body;
+  const { title, slug, user_id, public } = request.body;
+  const data = {
+    title: title,
+    slug: slug,
+    user_id: user_id,
+    public: public
+  };
+  console.log(data);
   // Insert the user input a new row into the database with the corresponding input
   Decks.create(data).then(data => {
     // Once the POST is made return then json response

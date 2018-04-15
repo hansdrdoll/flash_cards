@@ -1,13 +1,7 @@
-<<<<<<< HEAD
 import React, { Component } from "react";
+import { Input, Button, Form } from "semantic-ui-react";
 import InputItem from "./input-item";
 import "./style.css";
-=======
-import React, { Component } from 'react';
-import { Input, Button, Form } from 'semantic-ui-react';
-import InputItem from './input-item';
-import './style.css';
->>>>>>> 91dbb07077d102bc7ab046b6cbfe53f396052c3b
 
 class CreateDeck extends Component {
   constructor(props) {
@@ -76,18 +70,14 @@ class CreateDeck extends Component {
 
   handleTitleChange(evt) {
     this.setState({
-<<<<<<< HEAD
       newTitle: evt.target.value
-=======
-      newTitle: evt.target.value,
->>>>>>> 91dbb07077d102bc7ab046b6cbfe53f396052c3b
     });
   }
 
   handleSubmit(evt) {
     evt.preventDefault();
     // TODO: make this post data
-    console.log('Submitted');
+    console.log("Submitted");
   }
 
   render() {
@@ -105,7 +95,7 @@ class CreateDeck extends Component {
           <Button type="button" onClick={this.addEmptyCard}>
             Add Card
           </Button>
-            <Button type="submit">Submit</Button>
+          <Button type="submit">Submit</Button>
         </Form>
       </div>
     );
