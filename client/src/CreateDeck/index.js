@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Input, Button, Form } from "semantic-ui-react";
+import { fetchUserDecks } from "./api";
 import InputItem from "./input-item";
 import "./style.css";
 
@@ -24,9 +25,10 @@ class CreateDeck extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // componentDidMount() {
-  //
-  // }
+  componentDidMount() {
+    const token = { token: TokenService.read() };
+    fetchUserDecks(token).then(data => console.log(data));
+  }
 
   renderCards() {
     const cards = [];

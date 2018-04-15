@@ -20,34 +20,34 @@ VALUES
 
   -- DECKS --
   INSERT INTO decks
-  (title, user_id)
+  (title, slug, user_id)
   VALUES
-  ('Vanilla JS', 1);
+  ('Vanilla JS', 'vanilla-js', 1);
 
   INSERT INTO decks
-  (title, user_id)
+  (title, slug, user_id)
   VALUES
-  ('CSS', 1);
+  ('CSS', 'css', 1);
 
   INSERT INTO decks
-  (title, user_id)
+  (title, slug, user_id)
   VALUES
-  ('SQL', 2);
+  ('SQL', 'sql', 2);
 
   INSERT INTO decks
-  (title, user_id)
+  (title, slug, user_id)
   VALUES
-  ('High Order Functions', 2);
+  ('High Order Functions', 'high-order-functions', 2);
 
   INSERT INTO decks
-  (title, user_id)
+  (title, slug, user_id)
   VALUES
-  ('React', 3);
+  ('React', 'react', 3);
 
   INSERT INTO decks
-  (title, user_id)
+  (title, slug, user_id)
   VALUES
-  ('HTML', 3);
+  ('HTML', 'html', 3);
   --------------------------------------------------------------------------------
 
   -- CARDS --

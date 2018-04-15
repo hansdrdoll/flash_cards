@@ -3,7 +3,6 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-const db = require("./database/db-connection");
 const jsonParser = bodyParser.json();
 // Specify express as the engine
 const app = express();
@@ -79,8 +78,8 @@ app.get("/api/user", urlencodedParser, (request, response) => {
 app.post("/api/user/check-token", jsonParser, (request, response) => {
   // Extract the data from the body
   const { token } = request.body;
-  console.log(token);
   // Get all the users and return a json object
+
   TokenService.verify(token).then(data => {
     response.json(data.username);
   });
@@ -110,7 +109,8 @@ app.get("/api/user/:id", urlencodedParser, (request, response) => {
 });
 
 // Returns all decks associated with user when given token
-app.post("/api/decks/user-decks", urlencodedParser, (request, response) => {
+
+app.post("/api/decks/user-decks", jsonParser, (request, response) => {
   TokenService.verify(request.body.token).then(data => {
     Decks.getUserDecks(data.username).then(data => {
       response.json(data);
@@ -201,13 +201,10 @@ app.put("/api/deck/:deck_id/card/edit", (request, response) => {
 });
 
 // Create a route to get all the cards in the database
-app.get("/api/deck/:deck_id/cards", urlencodedParser, (request, response) => {
-  const deck_id = parseInt(request.params.deck_id);
-  console.log(deck_id);
-  // Extract the data from the URL
-  const data = request.body;
+
+app.get("/api/decks/:slug", urlencodedParser, (request, response) => {
   // Get all the cards
-  Cards.findAll(deck_id).then(data => {
+  Cards.findByDeckSlug(request.params.slug).then(data => {
     // Then return in a json object
     response.json(data);
   });

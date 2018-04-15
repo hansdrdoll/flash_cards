@@ -8,23 +8,32 @@ class GamePlay extends Component {
     super(props);
     this.state = {
       currentCard: 0,
-      cards: "",
+      cards: [
+        {
+          id: 2,
+          questions: "Who are the members of team AWESOME Sauce?",
+          anwser: "Haalby"
+        },
+        {
+          id: 3,
+          question: "What's the meaning of Life?",
+          answer: "11... Trust me on this, it's 11."
+        }
+      ],
       hidden: true
+      // slug: slug
     };
-    this.fetchCards = this.fetchCards.bind(this);
+    // this.fetchCards = this.fetchCards.bind(this);
+    this.nextCard = this.nextCard.bind(this);
+    this.resetCards = this.resetCards.bind(this);
   }
   componentDidMount() {
-    this.fetchCard();
-  }
-
-  fetchCard() {
-    fetch("/api/deck/:deck_id/cards").then(response => response.json());
-    this.setState((previousState, props) => {
-      cards.Object.assign(previousState.cards, cards);
-      return {
-        cards: currentCard
-      };
-    });
+    const { slug } = this.props.match.params;
+    // fetchCards(slug).then(cards => {
+    //   this.setState({
+    //     cards: cards
+    //   });
+    // });
   }
 
   nextCard(evt) {
