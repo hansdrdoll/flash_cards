@@ -93,14 +93,15 @@ app.get("/api/user/:id", urlencodedParser, (request, response) => {
   });
 });
 
-// Create a get route that returns all decks associated with an individual user id
-app.get("/api/decks/:user_id", urlencodedParser, (request, response) => {
-  // Extract the data from the url
-  const user_id = parseInt(request.params.user_id);
-  // Get all the users decks from the database and return a json object
-  Decks.getUserDecks(user_id).then(data => {
-    response.json(data);
-  });
+// Returns all decks associated with user when given token
+app.post("/api/decks/user-decks", urlencodedParser, (request, response) => {
+  TokenService.verify(request.body.token)
+    .then(data => {
+      Decks.getUserDecks(data.username)
+        .then(data => {
+          response.json(data);
+        });
+    });
 });
 
 // Create a new a route to post a new deck to the database
