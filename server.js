@@ -16,7 +16,7 @@ const Decks = require("./models/Decks");
 const Cards = require("./models/Cards");
 const Saved = require("./models/Saved");
 const Progression = require("./models/Progression");
-const tokenService = require("./services/TokenService");
+const TokenService = require("./services/TokenService");
 
 
 // Create a POST route to the api for creating a new user
@@ -24,8 +24,8 @@ app.post("/api/user/new", jsonParser, (request, response) => {
   // Insert the user inputs into the database in a new row in the corresponding fields
   console.log("server", request.body)
   Users.create(request.body)
-    .then(data => tokenService.makeToken({
-      username: data
+    .then(data => TokenService.makeToken({
+      username: data.username
     }))
     .then(token => {
       response.json({
@@ -36,9 +36,8 @@ app.post("/api/user/new", jsonParser, (request, response) => {
 
 // thanks ryan
 app.post('/login', jsonParser, (request, response) => {
-  console.log(request.body);
   Users.login(request.body)
-    .then(data => tokenService.makeToken({
+    .then(data => TokenService.makeToken({
       username: data
     }))
     .then(token => {
@@ -58,6 +57,17 @@ app.get("/api/user", urlencodedParser, (request, response) => {
   Users.findUser().then(data => {
     response.json(data);
   });
+});
+
+app.post("/api/user/check-token", jsonParser, (request, response) => {
+  // Extract the data from the body
+  const { token } = request.body;
+  console.log(token);
+  // Get all the users and return a json object
+  TokenService.verify(token)
+    .then(data => {
+      response.json(data.username)
+    })
 });
 
 // Create a route to Edit exiting user
@@ -192,6 +202,16 @@ app.get("/api/saved/:user_id", (request, response) => {
     response.json(data);
   });
 });
+
+app.get("/api/saved", urlencodedParser, (request, response) => {
+  const data = request.body;
+  // Get all the saved deck associated with the user's ID
+  Saved.savedDecks(user_id).then(data => {
+    // Then return a json object
+    response.json(data);
+  });
+});
+
 
 // Set the listening port for the server and log a confimatory message
 app.listen(4567, () => console.log(`Port 4567 is up!`));

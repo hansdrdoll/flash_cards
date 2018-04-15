@@ -8,7 +8,7 @@ Users.create = data => {
   const passwordDigest = bcrypt.hashSync(data.password, 10);
   // Add a row to database and return the id
   return db.one(
-    "INSERT INTO users(username, password_digest) VALUES($1, $2) RETURNING username",
+    "INSERT INTO users (username, password_digest) VALUES($1, $2) RETURNING *",
     // Reference the values in the database
     [data.username, passwordDigest]
   );
