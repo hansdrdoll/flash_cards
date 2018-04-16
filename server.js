@@ -108,7 +108,7 @@ app.post("/api/decks/user-decks", jsonParser, (request, response) => {
 app.post("/api/decks/new", jsonParser, (request, response) => {
   const { title, token } = request.body;
   // slugify the deck title
-  const slug = slugify(title);
+  const slug = slugify(title, {lower: true});
   // verify the token into a username
   TokenService.verify(token)
     .then(data => {
