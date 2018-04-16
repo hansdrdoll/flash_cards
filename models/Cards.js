@@ -1,4 +1,4 @@
-const db = require('../database/db-connection');
+const db = require("../database/db-connection");
 
 const Cards = {};
 
@@ -29,8 +29,9 @@ Cards.createMany = (arr, deck_id) => {
 }
 
 Cards.create = newCard => {
+
   return db.one(
-    'INSERT INTO cards (question, answer, deck_id) VALUES ($1, $2, $3) RETURNING id',
+    "INSERT INTO cards (question, answer, deck_id) VALUES ($1, $2, $3) RETURNING id",
     [newCard.question, newCard.answer, newCard.deck_id]
   );
 };
@@ -43,10 +44,11 @@ Cards.update = data => {
       card.card_id
     ])
   })
+
 };
 
 Cards.delete = id => {
-  return db.result('DELETE FROM cards WHERE id = $1', [id]);
+  return db.result("DELETE FROM cards WHERE id = $1", [id]);
 };
 
 module.exports = Cards;

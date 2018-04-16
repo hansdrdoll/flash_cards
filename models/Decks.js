@@ -40,6 +40,11 @@ Decks.create = (title, slug, username) => {
     });
 };
 
+Decks.updateTitle = (title, deckId) => {
+  console.log("updateTitle", title.title, deckId);
+  return db.result(`UPDATE decks SET title = $1 WHERE id = $2`, [title.title, deckId]);
+};
+
 Decks.update = deckData => {
   return db.none(
     "UPDATE decks SET title = $1, slug = $2, public = $3 WHERE id = $4",

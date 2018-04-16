@@ -19,8 +19,22 @@ const Saved = require("./models/Saved");
 const Progression = require("./models/Progression");
 const TokenService = require("./services/TokenService");
 
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+app.use(cors());
+
 // Create a POST route to the api for creating a new user
 app.post("/api/user/new", jsonParser, (request, response) => {
+  // Extract the data from the body
+  const { username, password_digest } = request.body;
+  const data = {
+    username: username,
+    password_digest: password_digest
+  };
   // Insert the user inputs into the database in a new row in the corresponding fields
   console.log("server", request.body);
   Users.create(request.body)
@@ -112,6 +126,7 @@ app.post("/api/decks/user-decks", jsonParser, (request, response) => {
 });
 
 // Create a new a route to post a new deck to the database
+
 app.post("/api/decks/new", jsonParser, (request, response) => {
   const { title, token } = request.body;
   // slugify the deck title
@@ -123,16 +138,44 @@ app.post("/api/decks/new", jsonParser, (request, response) => {
     });
   });
 });
-// });
+
+// Create a route insert a new card into the database
+app.post("/api/deck/:slug/card/new", jsonParser, (request, response) => {
+  // Extract the id from the url
+  const slug = request.params.slug;
+  // Extract the data from the URL
+  const { question, answer } = request.body;
+  const newCard = {
+    question: question,
+    answer: answer
+  };
+  // Insert a new row with the User input into the cards table
+  Cards.create(newCard, deck_id).then(newCard => {
+    response.json({ message: "ok" });
+  });
+});
 
 // Create a route to Edit and existing deck
 app.put("/api/decks/:deck_id/edit", jsonParser, (request, response) => {
   // Extract the data from the URL
-  console.log("u got the server");
   const data = request.body;
   const deckId = request.params.deck_id;
+
   // Update the row that corresponding to the id extracting
   Cards.update(data, deckId).then(data => {
+    // Once the Update is complete, return a json object
+    response.json(data);
+  });
+});
+
+// Create a route to Edit and existing deck
+app.put("/api/hans/:deck_id/title/edit", jsonParser, (request, response) => {
+  // Extract the data from the URL
+  const data = request.body;
+  const deckId = request.params.deck_id;
+  console.log("u got the server", data, deckId);
+  // Update the row that corresponding to the id extracting
+  Decks.updateTitle(data, deckId).then(data => {
     // Once the Update is complete, return a json object
     response.json(data);
   });
@@ -141,7 +184,7 @@ app.put("/api/decks/:deck_id/edit", jsonParser, (request, response) => {
 // Create a route that deletes and existing decks
 app.delete("/api/deck/:deck_id", (request, response) => {
   // Extract the id from the URL
-  const id = Number(request.params.id);
+  const id = parseInt(request.params.id);
   // Delete the row with corresponding id
   Decks.delete(id).then(data => {
     response.json(data);
@@ -172,16 +215,21 @@ app.post("/api/deck/:deck_id/card/new", (request, response) => {
 // Create a route to edit an existing card
 app.put("/api/deck/:deck_id/card/edit", jsonParser, (request, response) => {
   // Extract the data from the URL
-  const data = request.body;
+  const { question, answer } = request.body;
+  const data = {
+    question: question,
+    answer: answer
+  };
   // Update the request of the
-  Cards.update(data)
-    .then(data => {
-      // Return a json object
-      response.status(204);
-    })
-    .catch(err => {
-      response.json({ message: error });
-    });
+  Cards.update(data);
+  response.status(204);
+  // .then(data => {
+  //   // Return a json object
+  //   response.status(204);
+  // })
+  // .catch(err => {
+  //   response.json({ message: error });
+  // });
 });
 
 // Create a route to get all the cards in the database
@@ -197,18 +245,20 @@ app.get("/api/decks/:slug", urlencodedParser, (request, response) => {
 // --- **Saved_Decks** ---//
 
 // Create a route to POST to save a deck to a user
-app.post("/api/saved/:deck_id/new", (request, response) => {
+app.post("/api/saved/:deck_id/new", jsonParser, (request, response) => {
   // Extract the id from the URL
-  const id = Number(request.params.deck_id);
+  const deckId = Number(request.params.deck_id);
+  const { token } = request.body;
   // Send a request to the database to place the corresponding deck ID in the saved_decks join table
-  Saved.create(id).then(data => {
-    response.json(data);
+  TokenService.verify(token).then(token => {
+    Saved.create(token.username, deckId);
+    response.status(200);
   });
 });
 
 // Create a route to get all the user saved decks
 app.get("/api/saved/:user_id", (request, response) => {
-  const user_id = request.params.user_id;
+  const user_id = parseInt(request.params.user_id);
   console.log(user_id);
   // Extract the data from the URL
   const data = request.body;
@@ -228,6 +278,23 @@ app.post("/api/saved", urlencodedParser, (request, response) => {
     });
     // Get all the saved deck associated with the user's ID
     // Then return a json object
+    response.json(data);
+  });
+});
+
+app.post("/api/progresion/:card_id", jsonParser, (request, response) => {
+  const { token } = request.body;
+  const cardId = request.params.card_id;
+  TokenService.verify(token).then(data => {
+    Progression.create();
+  });
+});
+
+app.post("/api/progresion/:card_id", jsonParser, (request, response) => {
+  const { token } = request.body;
+  const cardId = request.params.card_id;
+  TokenService.verify(token).then(data => {
+    Progression.create();
   });
 });
 

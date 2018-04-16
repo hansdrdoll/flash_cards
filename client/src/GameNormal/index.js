@@ -1,41 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import TokenService from "../TokenService";
+import {fetchCardsInDeck} from "../api";
 
 class GameNormal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentCard: 0,
-      cards: [
-        {
-          id: 1,
-          question:
-            "What function can be used to do something after a specific amount of time?",
-          answer: "setTimeOut()"
-        },
-        {
-          id: 2,
-          question: "How do you grab an HTML element using Vanilla JavaScript?",
-          answer:
-            "You can use: 1) document.body.getElementsByTagName(className) 2) document.querySelectorAll(className)"
-        },
-        {
-          id: 3,
-          question:
-            "How do you put an element into an HTML tag using JavaScript?",
-          answer: "htmlTagName.appendChild('elementName')"
-        },
-        {
-          id: 4,
-          question: "Do you swim?",
-          answer: "You do now!"
-        },
-        {
-          id: 5,
-          question: "How do we relax?",
-          answer: "with JavaScript."
-        }
-      ]
+      cards: []
     };
     // this.addToTailored = this.addToTailored.bind(this);
     // this.deleteFromTailored = this.deleteFromTailored.bind(this);
@@ -43,14 +16,17 @@ class GameNormal extends Component {
     this.resetCards = this.resetCards.bind(this);
     this.shuffleCards = this.shuffleCards.bind(this);
   }
-  //
-  // addToTailored(evt) {
-  //   fetch(`http://localhost:4567/api/`)
-  // }
-  //
-  // deleteFromTailored(evt) {
-  //   fetch(`http://localhost:4567/api/`)
-  // }
+  
+  coomponentDidMount() {
+    const token = {token: TokenService.read()}
+    fetchCardsInDeck(this.props.match.params.slug)
+    .then(cards => {
+      this.setState({
+        cards: cards
+      })
+    })
+  }
+
 
   shuffleCards(evt) {
     const cardsArray = this.state.cards;

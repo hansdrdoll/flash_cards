@@ -8,7 +8,7 @@ import {
 import { Input, Button, Form } from "semantic-ui-react";
 import InputItem from "./input-item";
 import TokenService from "../TokenService";
-import { fetchCardsInDeck, fetchUserDecks, updateDeckCards } from "../api";
+import { fetchCardsInDeck, fetchUserDecks, updateDeckTitle, updateDeckCards } from "../api";
 import "../CreateDeck/style.css";
 
 class EditDeck extends Component {
@@ -26,16 +26,36 @@ class EditDeck extends Component {
   }
 
   componentDidMount() {
-    // const token = { token: TokenService.read() };
-    // fetchUserDecks(token)
-    //   .then(data => console.log(data));
+
+
+
+    const token = { token: TokenService.read() };
+    fetchUserDecks(token)
+    .then(data => console.log(data));
+
     fetchCardsInDeck(this.props.match.params.slug)
     .then(data => {
       this.setState({
-        cardData: data,
-        newTitle: data[0].deck_title,
+        cardData: data
       })
     })
+
+}
+
+  renderCards() {
+    const cards = [];
+    for (let i = 0; i < this.state.cardInputs.length; i++) {
+      cards.push(
+        <InputItem
+          key={i}
+          arrIndex={i}
+          handleFrontInput={this.handleFrontInput}
+          handleBackInput={this.handleBackInput}
+        />
+      );
+    }
+    return cards;
+
   }
 
   addEmptyCard() {
@@ -69,11 +89,12 @@ class EditDeck extends Component {
     });
   }
 
-// TODO: make this work
   handleSubmit(evt) {
     evt.preventDefault();
     console.log("Submitted");
     const deckId = Number(this.state.cardData[0].deck_id);
+    const title = { title: this.state.newTitle };
+    updateDeckTitle(title, deckId);
     updateDeckCards(this.state.cardData, deckId);
   }
 

@@ -42,6 +42,7 @@ const saveDeck = token => {
 
 // get the cards a deck
 const fetchCardsInDeck = slug => {
+  console.log("fetchCards", slug);
   // TODO: add username/token to this route
   return fetch(`http://localhost:4567/api/decks/${slug}`).then(response =>
     response.json()
@@ -69,8 +70,18 @@ const postNewCardsToDeck = (cardsArr, deck_id) => {
   }).then(response => response.json());
 };
 
+const updateDeckTitle = (title, deckId) => {
+  console.log("api", JSON.stringify(title));
+  return fetch(`http://localhost:4567/api/hans/${deckId}/title/edit`, {
+    method: "PUT",
+    body: JSON.stringify(title),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(response => console.log("client api response", response));
+};
+
 const updateDeckCards = (data, deckId) => {
-  // TODO: add update function for deck title
   return fetch(`http://localhost:4567/api/deck/${deckId}/card/edit`, {
     method: "PUT",
     body: JSON.stringify(data),
@@ -80,6 +91,18 @@ const updateDeckCards = (data, deckId) => {
   }).then(response => console.log("client api response", response));
 };
 
+const addToTailored = (token, cardId) => {
+  fetch(`http://localhost:4567/api/progression/${cardId}`, {
+    method: "POST",
+    body: JSON.stringify(cardId),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+};
+
+const deleteFromTailored = (token, cardId) => {};
+
 export {
   fetchCardsInDeck,
   fetchUserSavedDecks,
@@ -87,5 +110,8 @@ export {
   saveDeck,
   createNewDeck,
   postNewCardsToDeck,
-  updateDeckCards
+  updateDeckTitle,
+  updateDeckCards,
+  addToTailored,
+  deleteFromTailored
 };

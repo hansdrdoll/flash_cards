@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Input, Button, Form } from "semantic-ui-react";
 import InputItem from "./input-item";
-import { createNewDeck, postNewCardsToDeck } from "../api";
+import { createNewDeck, postNewCardsToDeck, fetchUserDecks } from "../api";
 import TokenService from "../TokenService";
 import "./style.css";
 
@@ -24,6 +24,11 @@ class CreateDeck extends Component {
     this.handleBackInput = this.handleBackInput.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    const token = { token: TokenService.read() };
+    fetchUserDecks(token).then(data => console.log(data));
   }
 
   renderCards() {
