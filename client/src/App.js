@@ -123,7 +123,7 @@ class App extends Component {
               <Route exact path="/decks/new" component={CreateDeck} />
               <Route
                 exact
-                path="/decks/:slug/edit"
+                path="/deck/:slug/edit"
                 component={({ match }) => <EditDeck match={match} />}
               />
               <Route exact path="/deck/:slug/play" component={GamePlay} />

@@ -2,20 +2,17 @@ import React from 'react';
 import { TextArea, Form, Input, Label, Menu } from 'semantic-ui-react';
 
 const InputItem = props => {
-  const { arrIndex } = props;
+  const { arrIndex, frontValue, backValue, cardId } = props;
   return (
     <div className="input-card">
       <Label>{arrIndex + 1}</Label>
       <TextArea
-        autoheight
-        placeholder="Front"
-        rows="2"
-        onChange={e => props.handleFrontInput(arrIndex, e)}
+        value={frontValue}
+        onChange={e => props.handleFrontInput(arrIndex, cardId, e)}
       />
       <TextArea
-        autoheight
-        placeholder="Back"
-        onChange={e => props.handleBackInput(arrIndex, e)}
+        value={backValue}
+        onChange={e => props.handleBackInput(arrIndex, cardId, e)}
       />
     </div>
   );
