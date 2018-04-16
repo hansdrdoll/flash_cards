@@ -220,18 +220,16 @@ app.get("/api/saved/:user_id", (request, response) => {
 });
 
 // TODO: check if this should be jsonParser
-app.post('/api/saved', urlencodedParser, (request, response) => {
-  const { token } = request.body
-  TokenService.verify(token)
-    .then(data => {
-      Saved.savedDecksByToken(data.username)
-        .then(data => {
-          response.json(data)
-    })
-  // Get all the saved deck associated with the user's ID
+app.post("/api/saved", urlencodedParser, (request, response) => {
+  const { token } = request.body;
+  TokenService.verify(token).then(data => {
+    Saved.savedDecksByToken(data.username).then(data => {
+      response.json(data);
+    });
+    // Get all the saved deck associated with the user's ID
     // Then return a json object
-  })
-})
+  });
+});
 
 // Set the listening port for the server and log a confimatory message
 app.listen(4567, () => console.log("Port 4567 is up!"));

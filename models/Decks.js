@@ -3,7 +3,7 @@ const db = require("../database/db-connection");
 const Decks = {};
 
 Decks.getAll = () => {
-  return db.any("SELECT * FROM Decks");
+  return db.any("SELECT * FROM decks");
 };
 
 Decks.getOne = slug => {
@@ -28,7 +28,8 @@ Decks.getPublicDecks = data => {
 
 Decks.create = (title, slug, username) => {
   // turn the username into the user_id
-  return db.one(`SELECT id FROM users WHERE username = $1`, username)
+  return db
+    .one("SELECT id FROM users WHERE username = $1", username)
     .then(user_id => {
       // then create the new deck info with the user id
       return db.one(

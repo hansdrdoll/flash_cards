@@ -1,31 +1,26 @@
 import React, { Component } from "react";
 import SavedDeck from "../SavedDeck";
+import { fetchUserSavedDecks } from "../api";
+import TokenService from "../TokenService";
 
 class SavedDecks extends Component {
   constructor(props) {
     super(props);
     this.state = {
       apiDataLoaded: false,
-      user_id: 1,
       savedDeck: {}
     };
-    this.fetchSavedDecks = this.fetchSavedDecks.bind(this);
   }
 
   componentDidMount() {
-    this.fetchSavedDecks();
+    fetchUserSavedDecks().then(savedDecksApiResponse => {
+      this.setState({
+        apiDataLoaded: true,
+        savedDeck: savedDecksApiResponse
+      });
+    });
   }
 
-  fetchSavedDecks() {
-    fetch(`http://localhost:4567/api/saved/${this.user_id}`)
-      .then(response => response.json())
-      .then(savedDeckApiResponse => {
-        this.setState({
-          apiDataLoaded: 1,
-          savedDeck: savedDeckApiResponse
-        });
-      });
-  }
   render() {
     const { savedDeck } = this.state;
     const sDecks = Object.values(savedDeck);
