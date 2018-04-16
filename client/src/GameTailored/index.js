@@ -15,14 +15,6 @@ class GameTailored extends Component {
     this.resetCards = this.resetCards.bind(this);
     this.shuffleCards = this.shuffleCards.bind(this);
   }
-  //
-  // addToTailored(evt) {
-  //   fetch(`http://localhost:4567/api/`)
-  // }
-  //
-  // deleteFromTailored(evt) {
-  //   fetch(`http://localhost:4567/api/`)
-  // }
 
   componentDidMount() {
     fetchCardsInDeck(this.props.match.params.slug)

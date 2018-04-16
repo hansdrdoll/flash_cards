@@ -8,7 +8,6 @@ import TokenService from "../TokenService";
 // import { nameOfFunctionHere } from "../api";
 // const token = TokenService.read();
 
-
 // get all the decks associated with the current user
 const fetchUserDecks = (token) => {
   return fetch(`http://localhost:4567/api/decks/user-decks`, {
@@ -81,11 +80,27 @@ const updateDeckCards = (data, deckId) => {
   }).then(response => console.log("client api response",response))
 }
 
+const addToTailored = (token, cardId) => {
+  fetch(`http://localhost:4567/api/progression/${cardId}`, {
+      method: "POST",
+      body: JSON.stringify(cardId),
+      headers: {
+        "Content-Type": "application/json"
+      }
+  })
+}
+
+const deleteFromTailored = (token, cardId) => {
+
+}
+
 export {
   fetchCardsInDeck,
   fetchUserDecks,
   createNewDeck,
   postNewCardsToDeck,
   updateDeckTitle,
-  updateDeckCards
+  updateDeckCards,
+  addToTailored,
+  deleteFromTailored
 };
