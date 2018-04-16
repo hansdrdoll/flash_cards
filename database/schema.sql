@@ -12,7 +12,7 @@ CREATE TABLE users(
 CREATE TABLE decks(
   id BIGSERIAL PRIMARY KEY,
   title VARCHAR(255),
-  slug VARCHAR(255),
+  slug VARCHAR(255) UNIQUE,
   user_id INTEGER REFERENCES users(id),
   public BOOLEAN DEFAULT false
 );

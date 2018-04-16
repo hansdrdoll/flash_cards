@@ -3,8 +3,9 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
-const db = require('./database/db-connection')
 const jsonParser = bodyParser.json()
+const slugify = require('slugify')
+
 // Specify express as the engine
 const app = express()
 
@@ -65,7 +66,6 @@ app.get('/api/user', urlencodedParser, (request, response) => {
 app.post('/api/user/check-token', jsonParser, (request, response) => {
   // Extract the data from the body
   const { token } = request.body
-  console.log(token)
   // Get all the users and return a json object
   TokenService.verify(token).then(data => {
     response.json(data.username)
@@ -102,7 +102,7 @@ app.get('/api/decks', (request, response) => {
 })
 
 // Returns all decks associated with user when given token
-app.post('/api/decks/user-decks', urlencodedParser, (request, response) => {
+app.post('/api/decks/user-decks', jsonParser, (request, response) => {
   TokenService.verify(request.body.token).then(data => {
     Decks.getUserDecks(data.username).then(data => {
       response.json(data)
@@ -111,15 +111,18 @@ app.post('/api/decks/user-decks', urlencodedParser, (request, response) => {
 })
 
 // Create a new a route to post a new deck to the database
-app.post('/api/deck/new', jsonParser, (request, response) => {
-  // Extract the data from the url
-  const data = request.body
-  // Insert the user input a new row into the database with the corresponding input
-  Decks.create(data).then(data => {
-    // Once the POST is made return then json response
-    response.json({ message: 'ok' })
+app.post('/api/decks/new', jsonParser, (request, response) => {
+  const { title, token } = request.body
+  // slugify the deck title
+  const slug = slugify(title)
+  // verify the token into a username
+  TokenService.verify(token).then(data => {
+    Decks.create(title, slug, data.username).then(data => {
+      response.json(data.id)
+    })
   })
 })
+// });
 
 // Create a route to Edit and existing deck
 app.put('/api/deck/:deck_id/edit', urlencodedParser, (response, request) => {
@@ -143,6 +146,12 @@ app.post('/api/deck/:deck_id', (request, response) => {
 })
 
 // --- **CARDS** ---//
+
+app.post('/api/deck/:deck_id/card/create', jsonParser, (request, response) => {
+  const deck_id = request.params.deck_id
+  const arr = request.body
+  Cards.createMany(arr, deck_id)
+})
 
 // Create a route insert a new card into the database
 app.post('/api/deck/:deck_id/card/new', (request, response) => {
@@ -173,13 +182,9 @@ app.put('/api/deck/:deck_id/card/edit', (request, response) => {
 })
 
 // Create a route to get all the cards in the database
-app.get('/api/deck/:deck_id/cards', urlencodedParser, (request, response) => {
-  const deck_id = request.params.deck_id
-  console.log(deck_id)
-  // Extract the data from the URL
-  const data = request.body
+app.get('/api/decks/:slug', urlencodedParser, (request, response) => {
   // Get all the cards
-  Cards.findAll(deck_id).then(data => {
+  Cards.findByDeckSlug(request.params.slug).then(data => {
     // Then return in a json object
     response.json(data)
   })

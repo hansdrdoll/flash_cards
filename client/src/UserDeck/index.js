@@ -10,11 +10,11 @@ const UserDeck = props => {
       {/* <Card.Content description={"deck number " + props.deckItem.id} /> */}
       <Card.Content extra>
         {/* <Button.Group> */}
-        <Link to={`${slug}/play`}>
+        <Link to={`/deck/${slug}/play`}>
           <Button floated="left">Review</Button>
         </Link>
 
-        <Link to={`${slug}/edit`}>
+        <Link to={`/deck/${slug}/edit`}>
           <Button floated="right">Edit</Button>
         </Link>
         {/* </Button.Group> */}

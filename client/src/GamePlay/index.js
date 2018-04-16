@@ -11,7 +11,7 @@ class GamePlay extends Component {
           Review all your cards or would you like to see see a selection
           tailored to you?
         </h1>
-        <Link to="/play/normal">
+        <Link to="./play/normal">
           <button className="game-type">
             normal{" "}
             <span role="img" aria-label="smile-blush">
@@ -19,7 +19,7 @@ class GamePlay extends Component {
             </span>
           </button>
         </Link>
-        <Link to="/play/tailored">
+        <Link to="./play/tailored">
           <button className="game-type">
             tailored{" "}
             <span role="img" aria-label="boom">
