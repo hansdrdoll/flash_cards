@@ -11,6 +11,7 @@ class GamePlay extends Component {
           Review all your cards or would you like to see see a selection
           tailored to you?
         </h1>
+        {/* This will allow us to play all the cards in the deck */}
         <Link to="./play/normal">
           <button className="game-type">
             normal{" "}
@@ -19,6 +20,7 @@ class GamePlay extends Component {
             </span>
           </button>
         </Link>
+        {/* This takes us to show only cards from the progression deck */}
         <Link to="./play/tailored">
           <button className="game-type">
             tailored{" "}

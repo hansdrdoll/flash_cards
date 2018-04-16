@@ -30,6 +30,7 @@ class UserDecks extends Component {
 
   render() {
     const { deckBySlug } = this.state;
+    // Get the values from the object in this.state.deckBySlug
     const decks = Object.values(deckBySlug);
     console.log(deckBySlug);
     console.log(decks);
@@ -40,6 +41,7 @@ class UserDecks extends Component {
         </div>
       );
     }
+    // Loop through the data from the api, and pass them on to the UserDeck component.
     const userDList = deckBySlug.map(deck => {
       return (
         <div className="deck-container">
