@@ -12,8 +12,8 @@ Saved.create = id => {
      (deck_id, user_id)
      SELECT cards.question, cards.answer
      FROM cards
-     JOIN user ON cards.user_id = user.id
-     JOIN decks ON cards.deck_id = deck.id`
+     JOIN user ON cards.user_id = users.id
+     JOIN decks ON cards.deck_id = decks.id`
   );
 };
 
@@ -22,8 +22,8 @@ Saved.savedDecks = user_id => {
   // Return any cards that matches the deck ID passed to the database
   return db.any(
     `SELECT * FROM saved_decks
-     JOIN user ON decks.user_id = user.id
-     JOIN decks on user.deck_id = deck.id
+     JOIN user ON decks.user_id = users.id
+     JOIN decks on users.deck_id = decks.id
      WHERE user_id = $1`,
     [user_id]
   );

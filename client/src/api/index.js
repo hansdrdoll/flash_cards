@@ -20,7 +20,7 @@ const fetchUserDecks = (token) => {
     }).then(response => response.json())
 }
 
-// get 
+// get
 const fetchUserSavedDecks = (token) => {
   return fetch(`http://localhost:4567/api/saved`, {
       method: "POST",
@@ -59,9 +59,21 @@ const postNewCardsToDeck = (cardsArr, deck_id) => {
     }).then(response => response.json())
 }
 
+const updateDeckCards = (data, deckId) => {
+  // TODO: add update function for deck title
+  return fetch(`http://localhost:4567/api/deck/${deckId}/card/edit`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(response => console.log("client api response",response))
+}
+
 export {
   fetchCardsInDeck,
   fetchUserDecks,
   createNewDeck,
   postNewCardsToDeck,
+  updateDeckCards
 };

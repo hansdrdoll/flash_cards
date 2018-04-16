@@ -126,18 +126,20 @@ app.post("/api/decks/new", jsonParser, (request, response) => {
 // });
 
 // Create a route to Edit and existing deck
-app.put("/api/deck/:deck_id/edit", urlencodedParser, (response, request) => {
+app.put("/api/decks/:deck_id/edit", jsonParser, (request, response) => {
   // Extract the data from the URL
+  console.log("u got the server");
   const data = request.body;
+  const deckId = request.params.deck_id;
   // Update the row that corresponding to the id extracting
-  Decks.update(data).then(data => {
+  Cards.update(data, deckId).then(data => {
     // Once the Update is complete, return a json object
     response.json(data);
   });
 });
 
 // Create a route that deletes and existing decks
-app.post("/api/deck/:deck_id", (request, response) => {
+app.delete("/api/deck/:deck_id", (request, response) => {
   // Extract the id from the URL
   const id = Number(request.params.id);
   // Delete the row with corresponding id
@@ -168,14 +170,14 @@ app.post("/api/deck/:deck_id/card/new", (request, response) => {
 });
 
 // Create a route to edit an existing card
-app.put("/api/deck/:deck_id/card/edit", (request, response) => {
+app.put("/api/deck/:deck_id/card/edit", jsonParser, (request, response) => {
   // Extract the data from the URL
   const data = request.body;
   // Update the request of the
   Cards.update(data)
     .then(data => {
       // Return a json object
-      response.json(data);
+      response.status(204);
     })
     .catch(err => {
       response.json({ message: error });

@@ -8,7 +8,7 @@ import {
 import { Input, Button, Form } from "semantic-ui-react";
 import InputItem from "./input-item";
 import TokenService from "../TokenService";
-import { fetchCardsInDeck, fetchUserDecks } from "../api";
+import { fetchCardsInDeck, fetchUserDecks, updateDeckCards } from "../api";
 import "../CreateDeck/style.css";
 
 class EditDeck extends Component {
@@ -46,10 +46,9 @@ class EditDeck extends Component {
   }
 
   handleFrontInput(index, cardId, evt) {
-    // const index = evt.target.attributes.index.value;
     const value = evt.target.value;
-    const tempState = this.state.cardInputs;
-    tempState[index].front = value;
+    const tempState = this.state.cardData;
+    tempState[index].question = value;
     this.setState({
       cardInputs: tempState
     });
@@ -69,11 +68,13 @@ class EditDeck extends Component {
       newTitle: evt.target.value
     });
   }
-  
+
 // TODO: make this work
   handleSubmit(evt) {
     evt.preventDefault();
     console.log("Submitted");
+    const deckId = Number(this.state.cardData[0].deck_id);
+    updateDeckCards(this.state.cardData, deckId);
   }
 
   render() {

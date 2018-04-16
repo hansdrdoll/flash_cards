@@ -35,12 +35,14 @@ Cards.create = newCard => {
   );
 };
 
-Cards.update = card => {
-  return db.none('UPDATE cards SET question = $1, answer = $2 WHERE id = $3', [
-    data.question,
-    data.answer,
-    data.id,
-  ]);
+Cards.update = data => {
+  data.map(card => {
+    db.none('UPDATE cards SET question = $1, answer = $2 WHERE id = $3', [
+      card.question,
+      card.answer,
+      card.card_id
+    ])
+  })
 };
 
 Cards.delete = id => {
