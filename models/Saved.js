@@ -29,6 +29,18 @@ Saved.savedDecks = user_id => {
   );
 };
 
+// since it's a join table, we can just select by username
+// and don't have to convert username to ID
+Saved.savedDecksByToken = username => {
+  return db.any(
+    `SELECT * FROM saved_decks
+     JOIN users ON users.id = saved_decks.user_id
+     JOIN decks ON saved_decks.deck_id = decks.id
+     WHERE users.username = $1`,
+    [username]
+  );
+};
+
 // Created a function that deletes saved decks from the save_decks table
 Saved.delete = id => {
   return db.result(

@@ -1,5 +1,14 @@
 import TokenService from "../TokenService";
 
+// Use the below to get access to the user token
+// to send as an argument, don't forget to change
+// the name of function that you want to import
+
+// import TokenService from "../TokenService";
+// import { nameOfFunctionHere } from "../api";
+// const token = TokenService.read();
+
+
 // get all the decks associated with the current user
 const fetchUserDecks = (token) => {
   return fetch(`http://localhost:4567/api/decks/user-decks`, {
@@ -11,6 +20,7 @@ const fetchUserDecks = (token) => {
     }).then(response => response.json())
 }
 
+// get 
 const fetchUserSavedDecks = (token) => {
   return fetch(`http://localhost:4567/api/saved`, {
       method: "POST",

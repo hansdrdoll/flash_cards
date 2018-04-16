@@ -19,6 +19,7 @@ Cards.findByDeckSlug = slug => {
 };
 
 Cards.createMany = (arr, deck_id) => {
+  // make an insert statement for each card in the deck
   arr.map(card => {
     console.log(card);
     db.none('INSERT INTO cards (question, answer, deck_id) VALUES ($1, $2, $3)',

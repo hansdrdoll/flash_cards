@@ -222,12 +222,17 @@ app.get('/api/saved/:user_id', (request, response) => {
   })
 })
 
-app.get('/api/saved', urlencodedParser, (request, response) => {
-  const data = request.body
+// TODO: check if this should be jsonParser
+app.post('/api/saved', urlencodedParser, (request, response) => {
+  const { token } = request.body
+  TokenService.verify(token)
+    .then(data => {
+      Saved.savedDecksByToken(data.username)
+        .then(data => {
+          response.json(data)
+    })
   // Get all the saved deck associated with the user's ID
-  Saved.savedDecks(user_id).then(data => {
     // Then return a json object
-    response.json(data)
   })
 })
 

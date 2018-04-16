@@ -27,10 +27,6 @@ class CreateDeck extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // componentDidMount() {
-  //
-  // }
-
   renderCards() {
     const cards = [];
     for (let i = 0; i < this.state.cardInputs.length; i++) {
