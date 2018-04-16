@@ -1,0 +1,19 @@
+input {
+  padding: 5px;
+}
+
+.input-card {
+  display: flex;
+  flex-flow: row;
+  width: 90vw;
+  justify-content: center;
+  /* align-items: center; */
+  margin: 5px 0;
+}
+
+.create-deck {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
