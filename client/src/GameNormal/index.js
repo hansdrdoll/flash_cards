@@ -106,7 +106,7 @@ class GameNormal extends Component {
         ) : (
           <div>
             <h1>Would you like to start over?</h1>
-            <Link to="/play">
+            <Link to="../play">
               <button className="end-of-game" onClick={this.resetCards}>
                 <span role="img" aria-label="pray">
                   🙏
