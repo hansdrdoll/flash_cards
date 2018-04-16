@@ -1,11 +1,10 @@
 import React from "react";
+import TokenService from "../TokenService";
 import { NavLink, Link } from "react-router-dom";
 import { Menu, Input } from "semantic-ui-react";
 import UserImg from "./ic_person_black_18px.svg";
 
 const Header = props => {
-  // QUESTION: we want the currently selected view to be highlighted.
-  // can this come from the react router match props?
   return (
     <div>
       {/* Mobile view */}
@@ -15,8 +14,6 @@ const Header = props => {
             as={NavLink}
             to="/dashboard"
             name="Dashboard"
-            // active={activeItem === 'editorials'}
-            // onClick={this.handleItemClick}
           >
             Dashboard
           </Menu.Item>
@@ -26,6 +23,12 @@ const Header = props => {
             </Menu.Item> */}
             <Menu.Item as={NavLink} to="/profile" name="profile">
               <img className="profile-img" src={UserImg} alt="user" />
+              {props.username != '' ? (
+                <p>{props.username}
+                <a onClick={props.logOut}>log out</a></p>
+              ):(
+                <p><Link to="/login">Log in</Link></p>
+              )}
             </Menu.Item>
           </Menu.Menu>
         </Menu>
@@ -37,8 +40,6 @@ const Header = props => {
             as={NavLink}
             to="/dashboard"
             name="Dashboard"
-            // active={activeItem === 'editorials'}
-            // onClick={this.handleItemClick}
           >
             Dashboard
           </Menu.Item>
@@ -46,8 +47,6 @@ const Header = props => {
             as={NavLink}
             to="/decks/new"
             name="CreateDeck"
-            // active={activeItem === 'editorials'}
-            // onClick={this.handleItemClick}
           >
             Create Deck
           </Menu.Item>
@@ -55,8 +54,14 @@ const Header = props => {
             {/* <Menu.Item>
             <Input className='icon' icon='search' placeholder='Search...' />
           </Menu.Item> */}
-            <Menu.Item as={NavLink} to="/profile" name="profile">
+            <Menu.Item name="profile">
               <img className="profile-img" src={UserImg} alt="user" />
+              {props.username != '' ? (
+                <p>{props.username}
+                <a onClick={props.logOut}> log out</a></p>
+              ):(
+                <p><Link to="/login">Log in</Link></p>
+              )}
             </Menu.Item>
           </Menu.Menu>
         </Menu>

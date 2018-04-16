@@ -5,6 +5,7 @@ class UserDecks extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      apiDataLoaded: false,
       user_id: 1,
       deckBySlug: {}
     };
@@ -20,17 +21,9 @@ class UserDecks extends Component {
     fetch(`http://localhost:4567/api/decks/`)
       .then(response => response.json())
       .then(decksApiResponse => {
-        console.log(decksApiResponse);
-        let deckBySlug = {};
-        decksApiResponse.forEach(data => {
-          console.log(data);
-          deckBySlug[data] = data;
-        });
-        this.setState((previousState, props) => {
-          deckBySlug = Object.assign(previousState.deckBySlug, deckBySlug);
-          return {
-            deckBySlug: deckBySlug
-          };
+        this.setState({
+          apiDataLoaded: true,
+          deckBySlug: decksApiResponse
         });
       });
   }
@@ -38,6 +31,8 @@ class UserDecks extends Component {
   render() {
     const { deckBySlug } = this.state;
     const decks = Object.values(deckBySlug);
+    console.log(deckBySlug);
+    console.log(decks);
     if (decks.length === 0) {
       return (
         <div>
@@ -45,10 +40,10 @@ class UserDecks extends Component {
         </div>
       );
     }
-    const userDList = decks.map(item => {
+    const userDList = deckBySlug.map(deck => {
       return (
         <div className="deck-container">
-          <UserDeck key={decks.id} title={decks.title} slug={decks.slug} />
+          <UserDeck deckData={deck} key={deck.id} />
         </div>
       );
     });

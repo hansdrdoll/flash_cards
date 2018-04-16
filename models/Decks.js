@@ -10,8 +10,12 @@ Decks.getOne = slug => {
   return db.one('SELECT * FROM decks WHERE slug = $1', [slug])
 }
 
-Decks.getUserDecks = user_id => {
-  return db.any('SELECT * FROM decks WHERE user_id = $1', [user_id])
+Decks.getUserDecks = username => {
+  return db.any(
+    `
+    SELECT decks.id, decks.title, decks.slug, decks.public FROM decks JOIN users ON decks.user_id = users.id WHERE users.username = $1`,
+    [username]
+  )
 }
 
 Decks.getPublicDecks = data => {

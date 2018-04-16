@@ -16,7 +16,7 @@ const Decks = require('./models/Decks')
 const Cards = require('./models/Cards')
 const Saved = require('./models/Saved')
 const Progression = require('./models/Progression')
-const tokenService = require('./services/TokenService')
+const TokenService = require('./services/TokenService')
 
 // Create a POST route to the api for creating a new user
 app.post('/api/user/new', jsonParser, (request, response) => {
@@ -24,8 +24,8 @@ app.post('/api/user/new', jsonParser, (request, response) => {
   console.log('server', request.body)
   Users.create(request.body)
     .then(data =>
-      tokenService.makeToken({
-        username: data
+      TokenService.makeToken({
+        username: data.username
       })
     )
     .then(token => {
@@ -37,10 +37,9 @@ app.post('/api/user/new', jsonParser, (request, response) => {
 
 // thanks ryan
 app.post('/login', jsonParser, (request, response) => {
-  console.log(request.body)
   Users.login(request.body)
     .then(data =>
-      tokenService.makeToken({
+      TokenService.makeToken({
         username: data
       })
     )
@@ -60,6 +59,16 @@ app.get('/api/user', urlencodedParser, (request, response) => {
   // Get all the users and return a json object
   Users.findUser().then(data => {
     response.json(data)
+  })
+})
+
+app.post('/api/user/check-token', jsonParser, (request, response) => {
+  // Extract the data from the body
+  const { token } = request.body
+  console.log(token)
+  // Get all the users and return a json object
+  TokenService.verify(token).then(data => {
+    response.json(data.username)
   })
 })
 
@@ -92,13 +101,12 @@ app.get('/api/decks', (request, response) => {
   })
 })
 
-// Create a get route that returns all decks associated with an individual user id
-app.get('/api/decks/:user_id', urlencodedParser, (request, response) => {
-  // Extract the data from the url
-  const user_id = parseInt(request.params.user_id)
-  // Get all the users decks from the database and return a json object
-  Decks.getUserDecks(user_id).then(data => {
-    response.json(data)
+// Returns all decks associated with user when given token
+app.post('/api/decks/user-decks', urlencodedParser, (request, response) => {
+  TokenService.verify(request.body.token).then(data => {
+    Decks.getUserDecks(data.username).then(data => {
+      response.json(data)
+    })
   })
 })
 
@@ -194,6 +202,15 @@ app.get('/api/saved/:user_id', (request, response) => {
   const user_id = request.params.user_id
   console.log(user_id)
   // Extract the data from the URL
+  const data = request.body
+  // Get all the saved deck associated with the user's ID
+  Saved.savedDecks(user_id).then(data => {
+    // Then return a json object
+    response.json(data)
+  })
+})
+
+app.get('/api/saved', urlencodedParser, (request, response) => {
   const data = request.body
   // Get all the saved deck associated with the user's ID
   Saved.savedDecks(user_id).then(data => {

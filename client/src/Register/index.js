@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Button, Header } from 'semantic-ui-react';
 import UserForm from '../UserForm';
 
 export default class Register extends Component {
@@ -17,9 +18,9 @@ export default class Register extends Component {
     // as a prop
     return (
       <div>
-        Register your account!
+        <Link to="/login"><Button size="tiny">Back to login</Button></Link>
+        <Header as='h2'>Register</Header>
         <UserForm submit={this.onSubmit} />
-        <p><Link to="/"><button>Back Home</button></Link></p>
       </div>
     )
   }
