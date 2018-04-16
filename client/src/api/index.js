@@ -33,6 +33,7 @@ const fetchUserSavedDecks = (token) => {
 
 // get the cards a deck
 const fetchCardsInDeck = (slug) => {
+  console.log("fetchCards", slug)
   // TODO: add username/token to this route
   return fetch(`http://localhost:4567/api/decks/${slug}`)
   .then(response => response.json())

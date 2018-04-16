@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { fetchCardsInDeck } from "../api";
 import { Link } from "react-router-dom";
 
 class GameTailored extends Component {
@@ -6,18 +7,7 @@ class GameTailored extends Component {
     super(props);
     this.state = {
       currentCard: 0,
-      cards: [
-        {
-          id: 4,
-          question: "Do you swim?",
-          answer: "You do now!"
-        },
-        {
-          id: 5,
-          question: "How do we relax?",
-          answer: "with JavaScript."
-        }
-      ]
+      cards: [],
     };
     // this.addToTailored = this.addToTailored.bind(this);
     // this.deleteFromTailored = this.deleteFromTailored.bind(this);
@@ -33,6 +23,15 @@ class GameTailored extends Component {
   // deleteFromTailored(evt) {
   //   fetch(`http://localhost:4567/api/`)
   // }
+
+  componentDidMount() {
+    fetchCardsInDeck(this.props.match.params.slug)
+      .then(cards => {
+        this.setState({
+          cards: cards,
+        })
+      })
+  }
 
   shuffleCards(evt) {
     const cardsArray = this.state.cards;
