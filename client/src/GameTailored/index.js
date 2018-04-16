@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import { fetchCardsInDeck } from "../api";
 import { Link } from "react-router-dom";
+import TokenService from "../TokenService";
+import { fetchCardsInDeck, fetchUserDecks } from "../api"
 
 class GameTailored extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentCard: 0,
-      cards: [],
+      cards: []
+
     };
     // this.addToTailored = this.addToTailored.bind(this);
     // this.deleteFromTailored = this.deleteFromTailored.bind(this);

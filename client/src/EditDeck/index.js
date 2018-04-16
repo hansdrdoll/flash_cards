@@ -26,16 +26,36 @@ class EditDeck extends Component {
   }
 
   componentDidMount() {
-    // const token = { token: TokenService.read() };
-    // fetchUserDecks(token)
-    //   .then(data => console.log(data));
+
+
+
+    const token = { token: TokenService.read() };
+    fetchUserDecks(token)
+    .then(data => console.log(data));
+
     fetchCardsInDeck(this.props.match.params.slug)
     .then(data => {
       this.setState({
-        cardData: data,
-        newTitle: data[0].deck_title,
+        cardData: data
       })
     })
+
+}
+
+  renderCards() {
+    const cards = [];
+    for (let i = 0; i < this.state.cardInputs.length; i++) {
+      cards.push(
+        <InputItem
+          key={i}
+          arrIndex={i}
+          handleFrontInput={this.handleFrontInput}
+          handleBackInput={this.handleBackInput}
+        />
+      );
+    }
+    return cards;
+
   }
 
   addEmptyCard() {
