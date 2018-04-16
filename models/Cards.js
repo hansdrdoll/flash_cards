@@ -18,6 +18,15 @@ Cards.findByDeckSlug = slug => {
   );
 };
 
+Cards.createMany = (arr, deck_id) => {
+  arr.map(card => {
+    console.log(card);
+    db.none('INSERT INTO cards (question, answer, deck_id) VALUES ($1, $2, $3)',
+      [card.front, card.back, deck_id])
+})
+  // console.log("destination",arr);
+}
+
 Cards.create = newCard => {
   return db.one(
     'INSERT INTO cards (question, answer, deck_id) VALUES ($1, $2, $3) RETURNING id',
