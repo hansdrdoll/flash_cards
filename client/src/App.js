@@ -95,7 +95,6 @@ class App extends Component {
         return response.json();
       })
       .then(response => {
-        console.log(response);
         if (loggedin) {
           this.setState({
             username: response,
