@@ -5,6 +5,7 @@ import { createNewDeck, postNewCardsToDeck } from "../api";
 import TokenService from "../TokenService";
 import './style.css';
 
+
 class CreateDeck extends Component {
   constructor(props) {
     super(props);
@@ -99,7 +100,7 @@ class CreateDeck extends Component {
           <Button type="button" onClick={this.addEmptyCard}>
             Add Card
           </Button>
-            <Button type="submit">Submit</Button>
+          <Button type="submit">Submit</Button>
         </Form>
       </div>
     );

@@ -5,23 +5,23 @@ import "./App.css";
 import Header from "./Header";
 import Dashboard from "./Dashboard";
 import CreateDeck from "./CreateDeck";
-import EditDeck from "./EditDeck";
 import GamePlay from "./GamePlay";
 import GameNormal from "./GameNormal";
 import GameTailored from "./GameTailored";
+import EditDeck from "./EditDeck";
 import UserForm from "./UserForm";
 import Register from "./Register";
 import Login from "./Login";
 import TokenService from "./TokenService";
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      username: "",
       loginRedirect: false,
-      logoutRedirect: false,
-    }
+      logoutRedirect: false
+    };
     this.logOut = this.logOut.bind(this);
     this.login = this.login.bind(this);
     this.register = this.register.bind(this);
@@ -36,10 +36,10 @@ class App extends Component {
     evt.preventDefault();
     TokenService.destroy();
     this.setState({
-      username: '',
+      username: "",
       loginRedirect: false,
-      logoutRedirect: true,
-    })
+      logoutRedirect: true
+    });
   }
 
   // regisers a user and places token in localStorage
@@ -51,12 +51,14 @@ class App extends Component {
         "Content-Type": "application/json"
       }
     })
-    .then(response => { return response.json() })
-    .then(response => {
-      TokenService.save(response.token)
-      this.checkToken(true);
-    })
-    .catch(err => console.log(`err: ${err}`));
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        TokenService.save(response.token);
+        this.checkToken(true);
+      })
+      .catch(err => console.log(`err: ${err}`));
   }
 
   // verifies credentials and places token in localStorage
@@ -68,64 +70,71 @@ class App extends Component {
         "Content-Type": "application/json"
       }
     })
-    .then(response => { return response.json() })
-    .then(response => {
-      TokenService.save(response.token);
-      this.checkToken(true);
-    })
-    .catch(err => console.log(`err: ${err}`));
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        TokenService.save(response.token);
+        this.checkToken(true);
+      })
+      .catch(err => console.log(`err: ${err}`));
   }
 
   checkToken(loggedin) {
     // get the stored token from browser
     const token = { token: TokenService.read() };
     // if there was a token, check it
-      fetch(`http://localhost:4567/api/user/check-token`, {
-        method: "POST",
-        body: JSON.stringify(token),
-        headers: {
-          "Content-Type": "application/json"
-        }
+    fetch(`http://localhost:4567/api/user/check-token`, {
+      method: "POST",
+      body: JSON.stringify(token),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        return response.json();
       })
-      .then(response => { return response.json() })
       .then(response => {
         if (loggedin) {
           this.setState({
             username: response,
-            loginRedirect: true,
-          })
+            loginRedirect: true
+          });
         } else {
           this.setState({
-            username: response,
-          })
+            username: response
+          });
         }
-      })
+      });
   }
 
   // To get access to the token for requests:
   // import TokenService from "../TokenService";
   // const token = TokenService.read();
-
   render() {
     return (
       <div className="app">
         <Router>
           <div className="all">
-            <Header username={this.state.username} logOut={this.logOut}/>
+            <Header username={this.state.username} logOut={this.logOut} />
             <div className="main-view">
               <Route exact path="/" component={Dashboard} />
               <Route exact path="/dashboard" component={Dashboard} />
-              <Route exact path="/play" component={GamePlay} />
-              <Route exact path="/play/normal" component={GameNormal} />
-              <Route exact path="/play/tailored" component={GameTailored} />
               <Route exact path="/decks/new" component={CreateDeck} />
+              <Route path="/:deckSlug/edit" component={EditDeck} />
+              <Route path="/:deckSlug/play" component={GamePlay} />
+              <Route path="/:deckSlug/play/normal" component={GameNormal} />
+              <Route path="/:deckSlug/play/tailored" component={GameTailored} />
               <Route exact path="/decks/:slug/edit" component={({ match }) => ( <EditDeck match={match} />)} />
               <Route exact path="/register" component={(props) => (
                   <Register {...props} submit={this.register} />
-              )} />
-              <Route exact path="/login" component={(props) => (
-                  <Login {...props} submit={this.login} />
-              )} />
+                )}
+              />
+              <Route
+                exact
+                path="/login"
+                component={props => <Login {...props} submit={this.login} />}
+              />
               {this.state.loginRedirect && <Redirect to="/dashboard" />}
               {this.state.logoutRedirect && <Redirect to="/dashboard" />}
             </div>
