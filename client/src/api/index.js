@@ -30,10 +30,10 @@ const fetchUserSavedDecks = token => {
   }).then(response => response.json());
 };
 
-const saveDeck = token => {
-  return fetch(`/api/saved/:deck_id/new`, {
+const saveDeck = (token, deck_id) => {
+  return fetch(`/api/saved/${deck_id}/new`, {
     method: "POST",
-    body: JSON.stringify(body),
+    body: JSON.stringify(token),
     headers: {
       "Content-Type": "application/"
     }

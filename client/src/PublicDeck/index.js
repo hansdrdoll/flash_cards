@@ -5,36 +5,30 @@ import { saveDeck } from "../api";
 import TokenService from "../TokenService";
 
 class PublicDeck extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       saveButton: "Save"
-    }
+    };
   }
+  // saveDeck()
 
-  componentDidMount() {
-    saveDeck().then(
-      this.setState({
-        saveButton: "Saved"
-      })
-    )
+  render() {
+    const { id, title, slug } = this.props.pubDeckData;
+    return (
+      <Card>
+        <Card.Content header={title} />
+        {/* <Card.Content description={"deck number " + props.deckItem.id} /> */}
+        <Card.Content extra>
+          <Link to={`/deck/${slug}/play`}>
+            <Button floated="left">Review</Button>
+          </Link>
+
+          <Button floated="right">{this.state.saveButton}</Button>
+        </Card.Content>
+      </Card>
+    );
   }
-
-  const { id, title, slug } = this.props.pubDeckData;
-  return (
-    <Card>
-      <Card.Content header={title} />
-      {/* <Card.Content description={"deck number " + props.deckItem.id} /> */}
-      <Card.Content extra>
-        <Link to={`/deck/${slug}/play`}>
-          <Button floated="left">Review</Button>
-        </Link>
-
-          <Button floated="right">{this.saveButton}</Button>
-
-      </Card.Content>
-    </Card>
-  );
-};
+}
 
 export default PublicDeck;
