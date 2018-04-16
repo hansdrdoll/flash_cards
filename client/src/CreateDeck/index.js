@@ -80,9 +80,9 @@ class CreateDeck extends Component {
     evt.preventDefault();
     console.log('Submitted');
     const token = TokenService.read();
-    createNewDeck(this.state.newTitle, token);
-    // postNewCardsToDeck(this.state.cardInputs);
-  }
+    createNewDeck(this.state.newTitle, token)
+      .then(res => postNewCardsToDeck(this.state.cardInputs, res))
+    }
 
   render() {
     return (

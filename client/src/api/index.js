@@ -18,14 +18,13 @@ const fetchCardsInDeck = (slug) => {
 
 const createNewDeck = (title, token) => {
   const body = { title, token }
-  console.log("api",body)
   return fetch(`http://localhost:4567/api/decks/new`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: {
       "Content-Type": "application/json"
     }
-  }).then(response => console.log(response))
+  }).then(response => response.json())
 }
 
 
