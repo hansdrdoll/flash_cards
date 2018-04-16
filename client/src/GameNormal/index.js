@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import TokenService from "../TokenService";
-import {fetchCardsInDeck} from "../api";
+import { fetchCardsInDeck } from "../api";
 
 class GameNormal extends Component {
   constructor(props) {
@@ -16,11 +16,13 @@ class GameNormal extends Component {
     this.resetCards = this.resetCards.bind(this);
     this.shuffleCards = this.shuffleCards.bind(this);
   }
-  
-  coomponentDidMount() {
+
+  componentDidMount() {
     const token = {token: TokenService.read()}
+    console.log("Hi im here");
     fetchCardsInDeck(this.props.match.params.slug)
     .then(cards => {
+      console.log(cards)
       this.setState({
         cards: cards
       })
