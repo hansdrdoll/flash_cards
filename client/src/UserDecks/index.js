@@ -10,7 +10,7 @@ class UserDecks extends Component {
     super(props);
     this.state = {
       apiDataLoaded: false,
-      userDeckData: {}
+      userDeckData: []
     };
   }
 
