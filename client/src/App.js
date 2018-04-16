@@ -5,6 +5,7 @@ import "./App.css";
 import Header from "./Header";
 import Dashboard from "./Dashboard";
 import CreateDeck from "./CreateDeck";
+import EditDeck from "./EditDeck";
 import GamePlay from "./GamePlay";
 import GameNormal from "./GameNormal";
 import GameTailored from "./GameTailored";
@@ -42,6 +43,7 @@ class App extends Component {
     });
   }
 
+  // regisers a user and places token in localStorage
   register(data) {
     return fetch(`http://localhost:4567/api/user/new`, {
       method: "POST",
@@ -60,6 +62,7 @@ class App extends Component {
       .catch(err => console.log(`err: ${err}`));
   }
 
+  // verifies credentials and places token in localStorage
   login(data) {
     return fetch(`http://localhost:4567/login`, {
       method: "POST",
@@ -124,10 +127,8 @@ class App extends Component {
               <Route path="/:deckSlug/play" component={GamePlay} />
               <Route path="/:deckSlug/play/normal" component={GameNormal} />
               <Route path="/:deckSlug/play/tailored" component={GameTailored} />
-              <Route
-                exact
-                path="/register"
-                component={props => (
+              <Route exact path="/decks/:slug/edit" component={({ match }) => ( <EditDeck match={match} />)} />
+              <Route exact path="/register" component={(props) => (
                   <Register {...props} submit={this.register} />
                 )}
               />
