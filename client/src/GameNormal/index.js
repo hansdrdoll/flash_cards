@@ -73,7 +73,7 @@ class GameNormal extends Component {
     });
   }
   resetCards(evt) {
-    // resets the value of currentCard
+    // resets the value of currentCard, regardless of length
     this.setState((previousState, props) => {
       return {
         currentCard: previousState.currentCard - previousState.cards.length
@@ -106,7 +106,9 @@ class GameNormal extends Component {
         ) : (
           <div>
             <h1>Would you like to start over?</h1>
-            <Link to="/play">
+            {/* Takes us back to the inital gameplay screen, where users
+              can choose to play a normal or tailored game.*/}
+            <Link to="../play">
               <button className="end-of-game" onClick={this.resetCards}>
                 <span role="img" aria-label="pray">
                   🙏
@@ -117,6 +119,7 @@ class GameNormal extends Component {
                 </span>
               </button>
             </Link>
+            {/* Takes us back to the dashboard*/}
             <Link to="/">
               <button className="end-of-game">
                 <span role="img" aria-label="shaka">

@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import { Input, Button, Form } from 'semantic-ui-react';
-import InputItem from './input-item';
+import React, { Component } from "react";
+import { Input, Button, Form } from "semantic-ui-react";
+import InputItem from "./input-item";
 import { createNewDeck, postNewCardsToDeck } from "../api";
 import TokenService from "../TokenService";
-import './style.css';
-
+import "./style.css";
 
 class CreateDeck extends Component {
   constructor(props) {
@@ -75,11 +74,12 @@ class CreateDeck extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    console.log('Submitted');
+    console.log("Submitted");
     const token = TokenService.read();
-    createNewDeck(this.state.newTitle, token)
-      .then(res => postNewCardsToDeck(this.state.cardInputs, res))
-    }
+    createNewDeck(this.state.newTitle, token).then(res =>
+      postNewCardsToDeck(this.state.cardInputs, res)
+    );
+  }
 
   render() {
     return (
