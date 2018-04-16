@@ -8,7 +8,7 @@ import {
 import { Input, Button, Form } from "semantic-ui-react";
 import InputItem from "./input-item";
 import TokenService from "../TokenService";
-import { fetchCardsInDeck, fetchUserDecks, updateDeckCards } from "../api";
+import { fetchCardsInDeck, fetchUserDecks, updateDeckTitle, updateDeckCards } from "../api";
 import "../CreateDeck/style.css";
 
 class EditDeck extends Component {
@@ -69,11 +69,12 @@ class EditDeck extends Component {
     });
   }
 
-// TODO: make this work
   handleSubmit(evt) {
     evt.preventDefault();
     console.log("Submitted");
     const deckId = Number(this.state.cardData[0].deck_id);
+    const title = { title: this.state.newTitle };
+    updateDeckTitle(title, deckId);
     updateDeckCards(this.state.cardData, deckId);
   }
 

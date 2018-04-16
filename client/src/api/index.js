@@ -59,8 +59,18 @@ const postNewCardsToDeck = (cardsArr, deck_id) => {
     }).then(response => response.json())
 }
 
+const updateDeckTitle = (title, deckId) => {
+  console.log("api",JSON.stringify(title));
+  return fetch(`http://localhost:4567/api/hans/${deckId}/title/edit`, {
+    method: "PUT",
+    body: JSON.stringify(title),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(response => console.log("client api response",response))
+}
+
 const updateDeckCards = (data, deckId) => {
-  // TODO: add update function for deck title
   return fetch(`http://localhost:4567/api/deck/${deckId}/card/edit`, {
     method: "PUT",
     body: JSON.stringify(data),
@@ -75,5 +85,6 @@ export {
   fetchUserDecks,
   createNewDeck,
   postNewCardsToDeck,
+  updateDeckTitle,
   updateDeckCards
 };

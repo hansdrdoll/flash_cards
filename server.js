@@ -128,11 +128,23 @@ app.post("/api/decks/new", jsonParser, (request, response) => {
 // Create a route to Edit and existing deck
 app.put("/api/decks/:deck_id/edit", jsonParser, (request, response) => {
   // Extract the data from the URL
-  console.log("u got the server");
   const data = request.body;
   const deckId = request.params.deck_id;
   // Update the row that corresponding to the id extracting
   Cards.update(data, deckId).then(data => {
+    // Once the Update is complete, return a json object
+    response.json(data);
+  });
+});
+
+// Create a route to Edit and existing deck
+app.put("/api/hans/:deck_id/title/edit", jsonParser, (request, response) => {
+  // Extract the data from the URL
+  const data = request.body;
+  const deckId = request.params.deck_id;
+  console.log("u got the server", data, deckId);
+  // Update the row that corresponding to the id extracting
+  Decks.updateTitle(data, deckId).then(data => {
     // Once the Update is complete, return a json object
     response.json(data);
   });
@@ -174,14 +186,15 @@ app.put("/api/deck/:deck_id/card/edit", jsonParser, (request, response) => {
   // Extract the data from the URL
   const data = request.body;
   // Update the request of the
-  Cards.update(data)
-    .then(data => {
-      // Return a json object
-      response.status(204);
-    })
-    .catch(err => {
-      response.json({ message: error });
-    });
+  Cards.update(data);
+  response.status(204);
+  // .then(data => {
+  //   // Return a json object
+  //   response.status(204);
+  // })
+  // .catch(err => {
+  //   response.json({ message: error });
+  // });
 });
 
 // Create a route to get all the cards in the database
