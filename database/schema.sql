@@ -1,7 +1,7 @@
-DROP DATABASE flash_cards;
-CREATE DATABASE flash_cards;
+-- DROP DATABASE flash_cards;
+-- CREATE DATABASE flash_cards;
 
-\c flash_cards;
+-- \c flash_cards;
 
 CREATE TABLE users(
   id BIGSERIAL PRIMARY KEY,

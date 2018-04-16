@@ -299,4 +299,4 @@ app.post("/api/progresion/:card_id", jsonParser, (request, response) => {
 });
 
 // Set the listening port for the server and log a confimatory message
-app.listen(4567, () => console.log("Port 4567 is up!"));
+app.listen(process.env.PORT || 4567, () => console.log("Port 4567 is up!"));
