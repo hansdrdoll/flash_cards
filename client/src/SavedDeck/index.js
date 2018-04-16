@@ -3,17 +3,19 @@ import { Card, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 const SavedDeck = props => {
-  const { savedItem } = props;
+  const { id, title, slug } = props.savedDeckData;
   return (
     <Card>
-      <Card.Content header={savedItem.title} />
+      <Card.Content header={title} />
       {/* <Card.Content description={"deck number " + props.deckItem.id} /> */}
       <Card.Content extra>
         {/* <Button.Group> */}
-        <Link to="/play">
+        <Link to={`${slug}/play`}>
           <Button floated="left">Review</Button>
         </Link>
-        <Button floated="right">Edit</Button>
+        <Link to={`${slug}/edit`}>
+          <Button floated="right">Edit</Button>
+        </Link>
         {/* </Button.Group> */}
       </Card.Content>
     </Card>
