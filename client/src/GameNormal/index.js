@@ -34,7 +34,6 @@ class GameNormal extends Component {
     });
   }
 
-
   shuffleCards(evt) {
     const cardsArray = this.state.cards;
     cardsArray.sort((a, b) => {

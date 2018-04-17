@@ -26,6 +26,12 @@ app.use(
   })
 );
 app.use(cors());
+// Declare a static directory pointing to the yarn build file.
+app.use(express.static(path.join(__dirname, "client/build")));
+
+app.get("/", (request, response) => {
+  response.redirect();
+});
 
 // Create a POST route to the api for creating a new user
 app.post("/api/user/new", jsonParser, (request, response) => {
@@ -296,6 +302,13 @@ app.post("/api/progresion/:card_id", jsonParser, (request, response) => {
   TokenService.verify(token).then(data => {
     Progression.create();
   });
+});
+
+// Declare a route for the yarn build
+// This route is a catch all for all the one's above.
+app.get("*", (request, response) => {
+  // send the file to the yarns' index.js to the url provided by heroku
+  response.sendFile(path.resolve(__dirname + "client/build/index.html"));
 });
 
 // Set the listening port for the server and log a confimatory message
