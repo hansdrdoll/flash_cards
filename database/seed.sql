@@ -1,4 +1,4 @@
-\c flash_cards
+-- \c flash_cards
 
 -- USERS --
 INSERT INTO users
