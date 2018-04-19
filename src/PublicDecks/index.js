@@ -16,7 +16,7 @@ class PublicDecks extends Component {
   }
 
   fetchPublicDecks() {
-    fetch(`http://localhost:4567/api/decks`)
+    fetch(`/api/decks`)
       .then(response => response.json())
       .then(publicDecksApiResponse => {
         console.log(publicDecksApiResponse);

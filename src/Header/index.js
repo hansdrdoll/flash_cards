@@ -18,9 +18,9 @@ const Header = props => {
             Dashboard
           </Menu.Item>
           <Menu.Menu position="right">
-            {/* <Menu.Item>
+            <Menu.Item>
               <Input className='icon' icon='search' placeholder='Search...' />
-            </Menu.Item> */}
+            </Menu.Item>
             <Menu.Item as={NavLink} to="/profile" name="profile">
               <img className="profile-img" src={UserImg} alt="user" />
               {props.username != '' ? (
@@ -51,9 +51,9 @@ const Header = props => {
             Create Deck
           </Menu.Item>
           <Menu.Menu position="right">
-            {/* <Menu.Item>
+            <Menu.Item>
             <Input className='icon' icon='search' placeholder='Search...' />
-          </Menu.Item> */}
+          </Menu.Item>
             <Menu.Item name="profile">
               <img className="profile-img" src={UserImg} alt="user" />
               {props.username != '' ? (

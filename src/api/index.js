@@ -10,7 +10,7 @@ import TokenService from "../TokenService";
 
 // get all the decks associated with the current user
 const fetchUserDecks = token => {
-  return fetch(`http://localhost:4567/api/decks/user-decks`, {
+  return fetch(`/api/decks/user-decks`, {
     method: "POST",
     body: JSON.stringify(token),
     headers: {
@@ -21,7 +21,7 @@ const fetchUserDecks = token => {
 
 // get
 const fetchUserSavedDecks = token => {
-  return fetch(`http://localhost:4567/api/saved`, {
+  return fetch(`/api/saved`, {
     method: "POST",
     body: JSON.stringify(token),
     headers: {
@@ -44,14 +44,14 @@ const saveDeck = (token, deck_id) => {
 const fetchCardsInDeck = slug => {
   console.log("fetchCards", slug);
   // TODO: add username/token to this route
-  return fetch(`http://localhost:4567/api/decks/${slug}`).then(response =>
+  return fetch(`/api/decks/${slug}`).then(response =>
     response.json()
   );
 };
 
 const createNewDeck = (title, token) => {
   const body = { title, token };
-  return fetch(`http://localhost:4567/api/decks/new`, {
+  return fetch(`/api/decks/new`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: {
@@ -61,7 +61,7 @@ const createNewDeck = (title, token) => {
 };
 
 const postNewCardsToDeck = (cardsArr, deck_id) => {
-  return fetch(`http://localhost:4567/api/deck/${deck_id}/card/create`, {
+  return fetch(`/api/deck/${deck_id}/card/create`, {
     method: "POST",
     body: JSON.stringify(cardsArr),
     headers: {
@@ -72,7 +72,7 @@ const postNewCardsToDeck = (cardsArr, deck_id) => {
 
 const updateDeckTitle = (title, deckId) => {
   console.log("api", JSON.stringify(title));
-  return fetch(`http://localhost:4567/api/hans/${deckId}/title/edit`, {
+  return fetch(`/api/hans/${deckId}/title/edit`, {
     method: "PUT",
     body: JSON.stringify(title),
     headers: {
@@ -82,7 +82,7 @@ const updateDeckTitle = (title, deckId) => {
 };
 
 const updateDeckCards = (data, deckId) => {
-  return fetch(`http://localhost:4567/api/deck/${deckId}/card/edit`, {
+  return fetch(`/api/deck/${deckId}/card/edit`, {
     method: "PUT",
     body: JSON.stringify(data),
     headers: {
@@ -92,7 +92,7 @@ const updateDeckCards = (data, deckId) => {
 };
 
 const addToTailored = (token, cardId) => {
-  fetch(`http://localhost:4567/api/progression/${cardId}`, {
+  fetch(`/api/progression/${cardId}`, {
     method: "POST",
     body: JSON.stringify(cardId),
     headers: {
