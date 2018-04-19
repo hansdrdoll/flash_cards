@@ -6,7 +6,6 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const jsonParser = bodyParser.json();
 const slugify = require("slugify");
 const path = require('path');
-
 // Specify express as the engine
 const app = express();
 
@@ -27,7 +26,7 @@ app.use(
   })
 );
 app.use(cors());
-
+// Declare a static directory pointing to the yarn build file.
 if (process.env.NODE_ENV == "production") {
   app.use(express.static(path.join(__dirname, "build")));
 }
@@ -307,11 +306,10 @@ app.post("/api/progresion/:card_id", jsonParser, (request, response) => {
   });
 });
 
-// Declare a route for the yarn build
-// This route is a catch all for all the one's above.
-
+// In production, any request that doesn't match a previous route
+// should send the front-end application, which will handle the route.
 if (process.env.NODE_ENV == "production") {
-  app.get("/*", function(request, response) {
+  app.get("/*", function (request, response) {
     response.sendFile(path.join(__dirname, "build", "index.html"));
   });
 }
