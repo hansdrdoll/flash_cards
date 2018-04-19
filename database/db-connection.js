@@ -17,7 +17,7 @@ const pgp = require("pg-promise")(initOptions);
 
 // Prepare the connection URL from the format: 'postgres://username:password@host:port/database';
 const connectionURL =
-  process.env.PORT || "postgres://localhost:5432/flash_cards";
+  process.env.DATABASE_URL || "postgres://localhost:5432/flash_cards";
 
 // Creating a new database connection with the provided URL.
 const db = pgp(connectionURL);
