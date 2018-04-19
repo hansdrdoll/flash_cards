@@ -26,8 +26,10 @@ app.use(
   })
 );
 app.use(cors());
-// Declare a static directory pointing to the yarn build file.
-app.use(express.static(path.join(__dirname, "client/build")));
+
+if (process.env.NODE_ENV == "production") {
+  app.use(express.static(path.join(__dirname, "build")));
+}
 
 app.get("/", (request, response) => {
   response.redirect();
@@ -306,10 +308,12 @@ app.post("/api/progresion/:card_id", jsonParser, (request, response) => {
 
 // Declare a route for the yarn build
 // This route is a catch all for all the one's above.
-app.get("*", (request, response) => {
-  // send the file to the yarns' index.js to the url provided by heroku
-  response.sendFile(path.resolve(__dirname + "client/build/index.html"));
-});
+
+if (process.env.NODE_ENV == "production") {
+  app.get("/*", function(request, response) {
+    response.sendFile(path.join(__dirname, "build", "index.html"));
+  });
+}
 
 // Set the listening port for the server and log a confimatory message
 app.listen(process.env.PORT || 4567, () => console.log("Port 4567 is up!"));
