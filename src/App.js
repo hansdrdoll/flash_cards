@@ -44,7 +44,7 @@ class App extends Component {
 
   // regisers a user and places token in localStorage
   register(data) {
-    return fetch(`http://localhost:4567/api/user/new`, {
+    return fetch(`/api/user/new`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -63,7 +63,7 @@ class App extends Component {
 
   // verifies credentials and places token in localStorage
   login(data) {
-    return fetch(`http://localhost:4567/login`, {
+    return fetch(`/login`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -84,7 +84,7 @@ class App extends Component {
     // get the stored token from browser
     const token = { token: TokenService.read() };
     // if there was a token, check it
-    fetch(`http://localhost:4567/api/user/check-token`, {
+    fetch(`/api/user/check-token`, {
       method: "POST",
       body: JSON.stringify(token),
       headers: {
