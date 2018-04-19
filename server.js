@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const jsonParser = bodyParser.json();
 const slugify = require("slugify");
+const path = require('path');
 
 // Specify express as the engine
 const app = express();
